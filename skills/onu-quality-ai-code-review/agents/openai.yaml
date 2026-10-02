@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ai Code Review"
+  short_description: "Help with Ai Code Review tasks"
+  default_prompt: "Use $onu-quality-ai-code-review to review the target project change with AI assistance."

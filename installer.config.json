@@ -1,0 +1,10 @@
+{
+  "source": {
+    "repository": "https://github.com/YOUR_ORG/shared-agent-skills.git",
+    "ref": "main",
+    "skillsPath": "skills"
+  },
+  "install": {
+    "preferSharedPathForMultipleClients": true
+  }
+}

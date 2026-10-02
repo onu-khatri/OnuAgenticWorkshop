@@ -1,0 +1,37 @@
+{
+  "name": "shared-agent-skills",
+  "version": "0.5.0",
+  "description": "Install Agent Skills from a configured Git repository into Codex, GitHub Copilot, and OpenCode.",
+  "type": "module",
+  "bin": {
+    "shared-agent-skills": "./bin/install.js"
+  },
+  "files": [
+    "bin/",
+    "installer.config.json",
+    "README.md",
+    "docs/"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "validate": "python3 scripts/validate.py && node --check bin/install.js && node --check scripts/build-tar.mjs && node --check scripts/test-local-installer.mjs && node --check scripts/test-packed-installer.mjs",
+    "install:skills": "node bin/install.js",
+    "dev:install": "node bin/install.js --local-source .",
+    "bundle": "node scripts/build-tar.mjs",
+    "test:local": "node scripts/test-local-installer.mjs",
+    "test:bundle": "node scripts/test-packed-installer.mjs",
+    "test": "npm run validate && npm run test:local && npm run test:bundle",
+    "ci:validate": "npm test",
+    "ci:bundle": "npm test && npm run bundle"
+  },
+  "keywords": [
+    "agent-skills",
+    "codex",
+    "github-copilot",
+    "opencode",
+    "skill-installer"
+  ],
+  "license": "MIT"
+}

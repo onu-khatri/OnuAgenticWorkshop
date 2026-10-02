@@ -1,0 +1,4 @@
+interface:
+  display_name: "openspec Orchestrator"
+  short_description: "Coordinate approved development handoffs"
+  default_prompt: "Use $onu-openspec-orchestration to route and hand off approved the target project development work."

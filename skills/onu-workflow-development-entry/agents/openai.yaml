@@ -1,0 +1,4 @@
+interface:
+  display_name: "Development Entry Gate"
+  short_description: "Route and gate the target project development work"
+  default_prompt: "Use $onu-workflow-development-entry before starting any the target project development work."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend Security Coder"
+  short_description: "Help with Frontend Security Coder tasks"
+  default_prompt: "Use $onu-frontend-security to secure the target project client-side change."

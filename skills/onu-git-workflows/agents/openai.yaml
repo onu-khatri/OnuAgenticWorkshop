@@ -1,0 +1,4 @@
+interface:
+  display_name: "Git Workflows"
+  short_description: "Help with Git Workflows tasks"
+  default_prompt: "Use $onu-git-workflows to keep the target project history clean and recover safely from Git mistakes."

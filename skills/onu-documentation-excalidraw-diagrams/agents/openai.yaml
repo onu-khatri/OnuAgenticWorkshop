@@ -1,0 +1,4 @@
+interface:
+  display_name: "Excalidraw Diagram Generator"
+  short_description: "Help with Excalidraw Diagram Generator tasks"
+  default_prompt: "Use $onu-documentation-excalidraw-diagrams to turn the target project architecture into diagram-ready structure."

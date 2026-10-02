@@ -1,0 +1,4 @@
+interface:
+  display_name: "Issues Kickoff"
+  short_description: "Find and implement selected GitHub issues"
+  default_prompt: "Use $onu-delivery-issues-kickoff to search the top 10 matching the target project GitHub issues, confirm my selection, and implement only the approved issues."

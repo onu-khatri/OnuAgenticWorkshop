@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend Dev Guidelines"
+  short_description: "Build reliable the target project React features"
+  default_prompt: "Use $onu-frontend-guidelines to implement or review a project-consistent, accessible, well-tested the target project frontend change."

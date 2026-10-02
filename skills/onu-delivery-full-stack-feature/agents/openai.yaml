@@ -1,0 +1,4 @@
+interface:
+  display_name: "Full Stack Feature Orchestrator"
+  short_description: "Help with Full Stack Feature Orchestrator tasks"
+  default_prompt: "Use $onu-delivery-full-stack-feature to drive the target project feature end to end."

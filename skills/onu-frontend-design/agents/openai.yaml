@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend Design"
+  short_description: "Shape distinctive, buildable the target project interfaces"
+  default_prompt: "Use $onu-frontend-design to shape polished, distinctive, implementation-ready interfaces for the target project."

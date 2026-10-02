@@ -1,0 +1,4 @@
+interface:
+  display_name: "Architecture Decision Records"
+  short_description: "Help with Architecture Decision Records tasks"
+  default_prompt: "Use $onu-architecture-adr to document a the target project technical decision as a durable ADR."

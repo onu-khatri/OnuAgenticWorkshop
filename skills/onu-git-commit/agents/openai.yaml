@@ -1,0 +1,4 @@
+interface:
+  display_name: "Git Commit"
+  short_description: "Help with Git Commit tasks"
+  default_prompt: "Use $onu-git-commit to write conventional commits and push the target project work safely."

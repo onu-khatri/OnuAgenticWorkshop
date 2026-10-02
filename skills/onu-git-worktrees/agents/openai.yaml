@@ -1,0 +1,4 @@
+interface:
+  display_name: "Git Worktrees"
+  short_description: "Help with Git Worktrees tasks"
+  default_prompt: "Use $onu-git-worktrees to create isolated workspaces for parallel the target project story delivery."

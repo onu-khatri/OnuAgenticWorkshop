@@ -1,0 +1,4 @@
+interface:
+  display_name: "Documentation Generator"
+  short_description: "Help with Documentation Generator tasks"
+  default_prompt: "Use $onu-documentation-generation to create accurate the target project documentation from repository evidence."

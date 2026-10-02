@@ -1,0 +1,72 @@
+name: Publish installer tgz on merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  publish-tgz:
+    name: Build and publish tgz artifact
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout merged commit
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          package-manager-cache: false
+
+      - name: Validate, test, and build bundle
+        run: npm run ci:bundle
+
+      - name: Read package metadata
+        id: package
+        shell: bash
+        run: |
+          echo "version=$(node -p \"require('./package.json').version\")" >> "$GITHUB_OUTPUT"
+
+      - name: Verify bundle
+        shell: bash
+        run: |
+          shopt -s nullglob
+          bundles=(dist/*.tgz)
+          if [[ ${#bundles[@]} -ne 1 ]]; then
+            echo "Expected exactly one dist/*.tgz bundle, found ${#bundles[@]}." >&2
+            exit 1
+          fi
+          sha256sum "${bundles[0]}" | tee bundle.sha256
+          {
+            echo "### Installer bundle"
+            echo
+            echo "- Package version: \`${{ steps.package.outputs.version }}\`"
+            echo "- Merged PR: #${{ github.event.pull_request.number }}"
+            echo "- Commit: \`${{ github.event.pull_request.merge_commit_sha }}\`"
+            echo "- SHA-256: \`$(cut -d ' ' -f1 bundle.sha256)\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload tgz artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: shared-agent-skills-${{ steps.package.outputs.version }}-pr-${{ github.event.pull_request.number }}
+          path: dist/*.tgz
+          if-no-files-found: error
+          retention-days: 90
