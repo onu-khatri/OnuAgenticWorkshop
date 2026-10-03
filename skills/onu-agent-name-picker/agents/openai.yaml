@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Name Picker"
+  short_description: "Assign themed identity names to agents and subagents"
+  default_prompt: "Use $onu-agent-name-picker to assign a themed identity name to this agent and weave it into self-descriptions."

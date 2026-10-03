@@ -2,7 +2,7 @@
 
 ## Retrieval Order
 
-1. Use the knowledge-base index (locate the knowledge-base directory by name, then read its index), when present, as a retrieval map rather than a fixed dependency.
+1. Use the knowledge-base index (via $onu-documentation-finder), when present, as a retrieval map rather than a fixed dependency.
 2. Identify the decision area and retrieve the current project knowledge topic, ADR, or other authority whose scope matches it.
 3. Verify the authority's status, scope, and effective date where available before proposing or reviewing a project-specific decision.
 4. If authorities conflict or are incomplete, report the conflict and recommend the smallest requirement clarification or ADR. Do not invent a local exception.

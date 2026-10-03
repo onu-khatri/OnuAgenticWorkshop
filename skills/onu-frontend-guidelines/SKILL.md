@@ -23,9 +23,9 @@ Read [frontend workflow routing](references/frontend-workflow-routing.md) when s
 
 ## Knowledge and project discovery
 
-1. Read the knowledge-base index (locate the knowledge-base directory by name, then read its index), then only linked project knowledge that materially affects the change.
+1. Read the knowledge-base index (via $onu-documentation-finder), then only linked project knowledge that materially affects the change.
 2. Inspect the target route, feature, shared primitive, and nearest tests before choosing a pattern.
-3. Read the project's client-adaptation knowledge (discover it through the knowledge-base index) for verified client conventions.
+3. Read the project's client-adaptation knowledge (via $onu-documentation-finder) for verified client conventions.
 4. Use the routed references below only for the decision at hand. They are guidance, not a substitute for local evidence.
 
 ## Workflow

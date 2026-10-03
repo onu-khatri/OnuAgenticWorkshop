@@ -35,11 +35,11 @@ const CLIENTS = {
 };
 
 function usage() {
-  console.log(`Shared Agent Skills installer
+  console.log(`OnuAgenticWorkshop installer
 
 Usage:
-  npx shared-agent-skills
-  npx shared-agent-skills --clients codex,github,opencode --scope project
+  npx onu-agentic-workshop
+  npx onu-agentic-workshop --clients codex,github,opencode --scope project
 
 Source options (override installer.config.json):
   --repo <git-url>      Skills Git repository URL/path
@@ -338,7 +338,7 @@ function fetchRepository(source) {
     return { tempRoot: null, repoDir, commit };
   }
 
-  const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'shared-agent-skills-'));
+  const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'onu-agentic-workshop-'));
   const repoDir = path.join(tempRoot, 'repo');
   fs.mkdirSync(repoDir, { recursive: true });
 
@@ -437,7 +437,7 @@ function writeProvenance(plan, source, commit) {
 
   for (const root of roots) {
     fs.mkdirSync(root, { recursive: true });
-    fs.writeFileSync(path.join(root, '.shared-agent-skills.lock.json'), `${JSON.stringify(payload, null, 2)}\n`);
+    fs.writeFileSync(path.join(root, '.onu-agentic-workshop.lock.json'), `${JSON.stringify(payload, null, 2)}\n`);
   }
 }
 

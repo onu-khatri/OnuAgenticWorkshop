@@ -23,7 +23,7 @@ For a multi-skill task, follow [frontend workflow routing](../onu-frontend-guide
 
 ## Knowledge routing
 
-1. Read the knowledge-base index (locate the knowledge-base directory by name, then read its index).
+1. Read the knowledge-base index (via $onu-documentation-finder).
 2. Read only the linked project knowledge that materially affects the surface you are designing.
 3. Read `references/design-playbook.md` for the deeper design method and anti-generic guardrails.
 

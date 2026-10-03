@@ -1,6 +1,6 @@
 {
   "source": {
-    "repository": "https://github.com/YOUR_ORG/shared-agent-skills.git",
+    "repository": "https://github.com/YOUR_ORG/onu-agentic-workshop.git",
     "ref": "main",
     "skillsPath": "skills"
   },

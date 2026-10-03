@@ -24,10 +24,10 @@ For multi-skill work, follow [frontend workflow routing](../onu-frontend-guideli
 
 ## Discovery
 
-1. Read the knowledge-base index (locate the knowledge-base directory by name, then read its index), then retrieve only applicable project knowledge.
+1. Read the knowledge-base index (via $onu-documentation-finder), then retrieve only applicable project knowledge.
 2. Follow [frontend workflow routing](../onu-frontend-guidelines/references/frontend-workflow-routing.md) to resolve any material evidence or user-decision gate before coding.
 3. Inspect the target route, feature, API contract, shared primitive, and closest tests.
-4. Read `$onu-frontend-guidelines`, plus the project's client-adaptation knowledge (discover it through the knowledge-base index), plus the narrowly relevant routed reference.
+4. Read `$onu-frontend-guidelines`, plus the project's client-adaptation knowledge (via $onu-documentation-finder), plus the narrowly relevant routed reference.
 5. Read [implementation playbook](references/implementation-playbook.md) when the change spans a route, form, remote data, or non-trivial interaction flow.
 
 ## Workflow

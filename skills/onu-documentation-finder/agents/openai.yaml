@@ -1,0 +1,4 @@
+interface:
+  display_name: "Documentation Finder"
+  short_description: "Locate knowledge-base artifacts deterministically"
+  default_prompt: "Use $onu-documentation-finder to locate the relevant knowledge-base topic or ADR for the task."

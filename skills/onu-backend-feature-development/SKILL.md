@@ -21,7 +21,7 @@ Use this skill to move from an approved backend requirement to review-ready code
 
 ## Knowledge routing
 
-1. Check the knowledge-base index (locate the knowledge-base directory by name, then read its index).
+1. Check the knowledge-base index (via $onu-documentation-finder).
 2. Read the API/application delivery topic for contract, validation, error, mapping, cancellation, or test-boundary decisions.
 3. Read the EF Core persistence topic when the change affects data access, schema, migrations, or initialization.
 4. Read a project adaptation topic only when the target repository has local architecture or framework conventions that affect the change.

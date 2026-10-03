@@ -66,7 +66,7 @@ jobs:
       - name: Upload tgz artifact
         uses: actions/upload-artifact@v7
         with:
-          name: shared-agent-skills-${{ steps.package.outputs.version }}-pr-${{ github.event.pull_request.number }}
+          name: onu-agentic-workshop-${{ steps.package.outputs.version }}-pr-${{ github.event.pull_request.number }}
           path: dist/*.tgz
           if-no-files-found: error
           retention-days: 90

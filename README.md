@@ -1,4 +1,4 @@
-# Shared Agent Skills
+# OnuAgenticWorkshop
 
 A reusable Agent Skills repository plus a lightweight `npx` installer for **Codex**, **GitHub Copilot**, and **OpenCode**.
 
@@ -30,7 +30,7 @@ Edit `installer.config.json` before publishing the npm installer:
 ```json
 {
   "source": {
-    "repository": "https://github.com/YOUR_ORG/shared-agent-skills.git",
+    "repository": "https://github.com/YOUR_ORG/onu-agentic-workshop.git",
     "ref": "main",
     "skillsPath": "skills"
   },
@@ -125,7 +125,7 @@ Codex, GitHub Copilot, and OpenCode all recognize `.agents/skills`, so one copy 
 After a successful install, the CLI writes:
 
 ```text
-.shared-agent-skills.lock.json
+.onu-agentic-workshop.lock.json
 ```
 
 inside each target skill root. It records:
@@ -188,7 +188,7 @@ Options:
 Keep one portable copy of every skill under `skills/`:
 
 ```text
-shared-agent-skills/
+onu-agentic-workshop/
 ├── skills/
 │   └── engineering-baseline/
 │       ├── SKILL.md
@@ -274,7 +274,7 @@ npm run bundle
 The generated package is written to:
 
 ```text
-dist/shared-agent-skills-<version>.tgz
+dist/onu-agentic-workshop-<version>.tgz
 ```
 
 Test that exact packed tarball through `npx`, still using the local working tree as the skill source:
@@ -287,8 +287,8 @@ The underlying local-package form is:
 
 ```bash
 npx --yes \
-  --package ./dist/shared-agent-skills-0.5.0.tgz \
-  shared-agent-skills \
+  --package ./dist/onu-agentic-workshop-0.5.0.tgz \
+  onu-agentic-workshop \
   --local-source .
 ```
 

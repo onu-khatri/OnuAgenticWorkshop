@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const repoRoot = path.resolve(path.dirname(__filename), '..');
 const distDir = path.join(repoRoot, 'dist');
-const projectDir = fs.mkdtempSync(path.join(os.tmpdir(), 'shared-agent-skills-packed-test-'));
+const projectDir = fs.mkdtempSync(path.join(os.tmpdir(), 'onu-agentic-workshop-packed-test-'));
 const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 const npx = process.platform === 'win32' ? 'npx.cmd' : 'npx';
 
@@ -27,7 +27,7 @@ try {
   run(npx, [
     '--yes',
     `--package=${tarball}`,
-    'shared-agent-skills',
+    'onu-agentic-workshop',
     '--local-source', repoRoot,
     '--clients', 'codex,github,opencode',
     '--scope', 'project',

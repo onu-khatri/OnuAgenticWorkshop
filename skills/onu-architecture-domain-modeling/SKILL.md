@@ -22,7 +22,7 @@ Use this skill to resolve business-model uncertainty. It produces modeling decis
 ## Authority discovery
 
 1. Start with the request, story, requirements, and affected code to identify the business decision.
-2. When present, use the knowledge-base index (locate the knowledge-base directory by name, then read its index) as a retrieval map. Select the current domain-modeling or project authority whose scope matches the decision; do not assume a fixed knowledge filename.
+2. When present, use the knowledge-base index (via $onu-documentation-finder) as a retrieval map. Select the current domain-modeling or project authority whose scope matches the decision; do not assume a fixed knowledge filename.
 3. Retrieve applicable ADRs through the repository's current index/registry or targeted search. Verify status and applicability before relying on one.
 4. Read [the target project architecture routing](../onu-architecture-review/references/architecture-routing.md) only when local module ownership, integration, or authority selection is material.
 5. If authorities conflict or do not answer the question, report the gap; do not invent a project rule.

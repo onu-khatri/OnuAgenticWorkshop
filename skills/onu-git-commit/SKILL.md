@@ -16,7 +16,7 @@ Use this skill to turn an inspected diff into small, reviewable, traceable commi
 ## Do not use this skill when
 
 - you need history rewriting or branch surgery (use `onu-git-workflows`)
-- you only need to review a diff (use `onu-quality-production-code-review`)
+- you only need to review a diff (use `onu-quality-code-review-be')
 
 ## Preflight and branch safety
 

@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const repoRoot = path.resolve(path.dirname(__filename), '..');
-const projectDir = fs.mkdtempSync(path.join(os.tmpdir(), 'shared-agent-skills-local-test-'));
+const projectDir = fs.mkdtempSync(path.join(os.tmpdir(), 'onu-agentic-workshop-local-test-'));
 const installer = path.join(repoRoot, 'bin', 'install.js');
 
 try {
@@ -23,7 +23,7 @@ try {
   if (result.status !== 0) process.exit(result.status ?? 1);
 
   const skill = path.join(projectDir, '.agents', 'skills', 'engineering-baseline', 'SKILL.md');
-  const lock = path.join(projectDir, '.agents', 'skills', '.shared-agent-skills.lock.json');
+  const lock = path.join(projectDir, '.agents', 'skills', '.onu-agentic-workshop.lock.json');
   if (!fs.existsSync(skill)) throw new Error(`Expected installed skill was not created: ${skill}`);
   if (!fs.existsSync(lock)) throw new Error(`Expected provenance lock was not created: ${lock}`);
 

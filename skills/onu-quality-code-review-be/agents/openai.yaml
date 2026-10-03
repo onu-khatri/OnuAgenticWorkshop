@@ -1,0 +1,4 @@
+interface:
+  display_name: "Backend Code Review"
+  short_description: "Help with .NET backend code review methodology"
+  default_prompt: "Use $onu-quality-code-review to drive the review; $onu-quality-code-review-be supplies the .NET backend methodology."

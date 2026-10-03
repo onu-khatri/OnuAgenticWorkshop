@@ -1,10 +1,10 @@
 {
-  "name": "shared-agent-skills",
+  "name": "onu-agentic-workshop",
   "version": "0.5.0",
   "description": "Install Agent Skills from a configured Git repository into Codex, GitHub Copilot, and OpenCode.",
   "type": "module",
   "bin": {
-    "shared-agent-skills": "./bin/install.js"
+    "onu-agentic-workshop": "./bin/install.js"
   },
   "files": [
     "bin/",

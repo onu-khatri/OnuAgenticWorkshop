@@ -122,7 +122,7 @@ Do not infer approval from the `ready-to-implement` label, issue selection, cont
 
 ### 5. Load implementation context
 
-Read `AGENTS.md`, the knowledge-base index (locate the knowledge-base directory by name, then read its index), the selected source story pack, and the linked GitHub issue. Read only the knowledge topics and specialist skill references relevant to the delivery shape. Reconcile the issue URL/number and scope against the story's `## GitHub Issues` register and body; if the register is missing or the issue and local story materially disagree, stop and report the mismatch before changing code.
+Read `AGENTS.md`, the knowledge-base index (via $onu-documentation-finder), the selected source story pack, and the linked GitHub issue. Read only the knowledge topics and specialist skill references relevant to the delivery shape. Reconcile the issue URL/number and scope against the story's `## GitHub Issues` register and body; if the register is missing or the issue and local story materially disagree, stop and report the mismatch before changing code.
 
 ### 6. Resolve issue order and dependencies
 

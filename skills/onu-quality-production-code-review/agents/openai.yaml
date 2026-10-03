@@ -1,4 +1,0 @@
-interface:
-  display_name: "Production Code Reviewer"
-  short_description: "Help with Production Code Reviewer tasks"
-  default_prompt: "Use $onu-quality-production-code-review to review the target project change before merge."

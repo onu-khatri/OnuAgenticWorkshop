@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Review"
+  short_description: "Orchestrate production-readiness code review"
+  default_prompt: "Use $onu-quality-code-review to review the target project change before merge."

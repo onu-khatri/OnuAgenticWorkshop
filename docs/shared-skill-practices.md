@@ -50,7 +50,7 @@ For that reason, when more than one client is selected, this installer defaults 
 
 Version the lightweight npm installer independently from the skills source. The source repository setting has its own Git ref. For reproducible team or CI installs, use a release tag or immutable commit SHA instead of a moving branch.
 
-The installer records the resolved source commit in `.shared-agent-skills.lock.json` alongside installed skills.
+The installer records the resolved source commit in `.onu-agentic-workshop.lock.json` alongside installed skills.
 
 ## Inspect and trust remote skills
 

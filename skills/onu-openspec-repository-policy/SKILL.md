@@ -16,7 +16,7 @@ their contents and may replace them.
 Keep project-specific policy in `AGENTS.md`. Apply this
 skill as an overlay whenever an OpenSpec workflow is used:
 
-- Read `AGENTS.md` and the knowledge-base index (locate the knowledge-base directory by name, then read its index) before planning or delivery.
+- Read `AGENTS.md` and the knowledge-base index (via $onu-documentation-finder) before planning or delivery.
 - Use `$onu-workflow-development-entry` before any development edit. Its result is a
   gate, not an implementation handoff by itself.
 - Keep proposal artifacts in the main checkout and implementation work in the

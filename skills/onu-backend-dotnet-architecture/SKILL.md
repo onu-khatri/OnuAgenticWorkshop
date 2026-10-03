@@ -22,7 +22,7 @@ Use this skill for architecture design before implementation. It produces a deci
 ## Authority discovery
 
 1. Establish the decision from the request, story, requirements, current code, tests, and host composition.
-2. When present, use the knowledge-base index (locate the knowledge-base directory by name, then read its index) as a retrieval map. Select only the current authority whose scope matches the decision area; do not require a fixed knowledge filename.
+2. When present, use the knowledge-base index (via $onu-documentation-finder) as a retrieval map. Select only the current authority whose scope matches the decision area; do not require a fixed knowledge filename.
 3. Discover applicable ADRs through the repository's current index/registry or targeted search. Verify status, scope, and conflicts; do not assume a particular ADR number.
 4. Read [the target project architecture routing](../onu-architecture-review/references/architecture-routing.md) only when project-specific ownership or authority selection is material.
 5. Retrieve API/application, persistence, security, performance, or other specialist authority only when that decision area is affected.

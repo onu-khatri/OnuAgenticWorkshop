@@ -36,7 +36,7 @@ Do not use this skill when `$openspec-apply-change` explicitly targets one chang
 
 At the start of every invocation, determine the requested lifecycle action and reconstruct state from:
 
-- `AGENTS.md`, the knowledge-base index (locate the knowledge-base directory by name, then read its index), and relevant repository instructions;
+- `AGENTS.md`, the knowledge-base index (via $onu-documentation-finder), and relevant repository instructions;
 - the issue/story pack and GitHub state when issue-driven;
 - `openspec/config.yaml`, active changes, artifacts, and task checkboxes;
 - current branch, worktree list, status, and any existing PR/CI/review evidence.
@@ -81,7 +81,7 @@ When an approved proposal exists and the user asks to implement, write code, con
 2. If an existing matching worktree is available, validate that it is a live Git worktree on the canonical branch, has the expected issue/change identity, and was created or explicitly approved for the current implementation handoff. A prunable, broken, incomplete, untracked, or pre-approval worktree is not reusable; report it and stop without repairing, deleting, or creating a replacement automatically.
 3. If no valid matching worktree exists, explicitly ask whether to create the canonical worktree now. Skip this question only when the user already confirmed worktree creation in the current request or an existing workflow checkpoint that includes proposal validation, Definition-of-Ready completion, implementation approval, and owner/base-branch evidence.
 4. After confirmation, use `$onu-git-worktrees` to create and validate `openspec/gh-<issue-number>-<short-kebab-slug>` at `.worktrees/gh-<issue-number>-<short-kebab-slug>` from the actual default branch. For issue-less changes use the canonical `openspec/<change-name>` branch.
-5. Re-read `AGENTS.md`, the knowledge-base index (locate the knowledge-base directory by name, then read its index), the source story pack, and all OpenSpec context files from inside the worktree. If `AGENTS.md` differs from the approved main-checkout version, synchronize the approved file before coding and verify the diff; do not silently discard either version.
+5. Re-read `AGENTS.md`, the knowledge-base index (via $onu-documentation-finder), the source story pack, and all OpenSpec context files from inside the worktree. If `AGENTS.md` differs from the approved main-checkout version, synchronize the approved file before coding and verify the diff; do not silently discard either version.
 6. Update only implementation tracking metadata in the worktree story (`status: In_Progress`, branch, worktree path, base branch, updated), preserving body and unrelated edits.
 7. From inside the worktree, invoke `$onu-openspec-orchestration`, then `$openspec-apply-change` for pending tasks. The apply workflow MUST run `$onu-workflow-development-entry` before the first code edit and use the routed implementation/security/review skills.
 8. Keep OpenSpec task checkboxes, implementation files, tests, migrations, and verification evidence in the worktree. Report actual commands and results; do not claim success from planned commands.

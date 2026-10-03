@@ -13,7 +13,7 @@ This skill is a handoff workflow, not a story-authoring workflow. Use `onu-produ
 
 1. Treat the supplied path as the authoritative source file. Resolve it from the repository root and read the complete `.US.md` file.
 2. Confirm that the file is a user-story file, has frontmatter, and contains a stable `id`, `title`, user story, requirements or scope, and acceptance criteria. If a required element is missing, stop and report the missing item.
-3. Read the repository `AGENTS.md` and the knowledge-base index (locate the knowledge-base directory by name, then read its index) before acting. Use linked story or GitHub knowledge only when the index identifies it as relevant.
+3. Read the repository `AGENTS.md` and the knowledge-base index (via $onu-documentation-finder) before acting. Use linked story or GitHub knowledge only when the index identifies it as relevant.
 4. Check the current worktree and source file status. Preserve unrelated changes; do not reset, stash, or overwrite them.
 5. Require `status: Ready_To_Implement`. Do not proceed when `status` is already `Move_To_GitHub_Issue` unless the user explicitly asks to reconcile or recreate the handoff. This prevents accidental duplicate issues.
 

@@ -99,7 +99,7 @@ Use this sequence when adding or revising a backend or architecture skill:
 2. Classify each proposed instruction as a trigger/workflow/gate/output, reusable guidance, project fact, or ADR rule.
 3. Put it in the owning artifact. Prefer linking an existing knowledge authority over copying it.
 4. Add a concise example only if an observed high-risk mistake would otherwise remain ambiguous.
-5. Update the knowledge-base index (locate the knowledge-base directory by name, then read its index) only when the revised topic is authoritative for a distinct decision trigger.
+5. Update the knowledge-base index (via $onu-documentation-finder) only when the revised topic is authoritative for a distinct decision trigger.
 6. Verify the active body, links, and index entries agree before packaging the change.
 
 ## Verification And Testing

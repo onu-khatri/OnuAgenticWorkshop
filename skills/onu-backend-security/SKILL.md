@@ -38,7 +38,7 @@ Use this skill to apply practical backend security during implementation and rev
 
 ## Project security guide
 
-For repository-specific security patterns (ownership headers, audit pipeline, configuration keys, error mapping), read the project's security review guide (discover it through the knowledge-base index).
+For repository-specific security patterns (ownership headers, audit pipeline, configuration keys, error mapping), read the project's security review guide (via $onu-documentation-finder).
 
 ## Target project focus
 

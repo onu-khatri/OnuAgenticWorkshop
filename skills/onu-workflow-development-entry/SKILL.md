@@ -18,7 +18,7 @@ The gate must finish before an implementation agent, branch, worktree, or code e
 
 ## Gate A: establish the request and evidence
 
-Read `AGENTS.md` and the knowledge-base index (locate the knowledge-base directory by name, then read its index) first. For issue-driven work, also read the selected GitHub issue and its source story pack. For direct development requests, identify the stated outcome, acceptance behavior, target area, and requested delivery boundary.
+Read `AGENTS.md` and the knowledge-base index (via $onu-documentation-finder) first. For issue-driven work, also read the selected GitHub issue and its source story pack. For direct development requests, identify the stated outcome, acceptance behavior, target area, and requested delivery boundary.
 
 Inspect the current implementation and closest tests before routing. Check `git status --short` and preserve unrelated user changes. Resolve the actual project, client, route, module, test-project, and configuration paths from the checkout; do not rely on stale paths or pasted stack assumptions.
 

@@ -1,0 +1,81 @@
+# Per-PR review plan schema. Static policy (severity scale, evidence classification,
+# output rules, test/coverage thresholds, KB gates) lives in references/BackendCoreReviewPolicy.md
+# and is NOT restated here. Fill only per-PR values below; leave `overrides` empty to accept defaults.
+review_plan:
+  version: 4
+  status: draft
+  created_for: AgentCodeReview
+  approval_required: true
+  policy_ref: references/BackendCoreReviewPolicy.md
+
+inputs:
+  comparison_mode: base_branch+feature_branch   # base_branch+feature_branch | commit_pair | working_tree
+  review_target_kind: branch                    # branch | working_tree | commit_pair
+  pr_url:
+  repo_url:
+  base_branch:
+  feature_branch:
+  base_commit:
+  head_commit:
+  merge_base:                                    # computed by router/execution, never before approval
+  user_story_url:
+  work_item_provider: ""              # MCP provider for work items (e.g. ado-on-prem-mcp); overridable per project
+  solution_or_project_path:
+  test_project_path:
+  service_name:
+  target_framework:
+  database_provider:
+  api_style:
+  review_depth: deep
+
+scope:
+  include: []    # empty = default scope per policy
+  exclude: []    # generated (*.auto.cs / *.auto.md) and KB/package artifacts are always bucketed separately
+
+# Which review capabilities were selected and why. Populated during planning (discovery
+# + applicability), refined once after intake when risk indicators surface. Static
+# methodology for each capability lives in its own SKILL.md, NOT here.
+review_capabilities:
+  - capability: onu-quality-code-review-be
+    why_applicable: "<reason derived from changed file types / technologies / areas / user story>"
+    mode: primary            # primary | supplementary
+    execution: inline        # inline | delegate_candidate
+    delegation_scope: ""     # when delegate_candidate: bounded sub-area that may be delegated
+    dependencies: []         # other capabilities this one supplements or depends on
+
+# PR-specific high-risk focus areas inferred during planning (not static policy).
+risk_focus:
+  primary_behavior_paths: []   # e.g. "API -> validation -> service -> repository -> DB"
+  likely_high_risk_areas: []   # e.g. migration_data_safety, tenant_isolation, retry_idempotency
+  context_expansion_targets: [] # caller/callee/consumer edges to inspect beyond the diff
+  verification_approach: ""     # how to verify (targeted build/test + reasoning)
+
+# PR-specific execution strategy. Lightweight; does NOT restate methodology/policy.
+review_strategy:
+  summary: ""
+  depth_by_area: {}          # optional: {"migrations": "deep", "docs": "proportional"}
+  delegation_plan: []        # optional: decided delegation targets (see router Delegation Decision)
+
+planned_verification:
+  commands:
+    - git status --short
+    - git fetch --all --prune
+    - git diff --name-status <resolved_base>...<resolved_head>
+    - git diff --stat <resolved_base>...<resolved_head>
+    - "<dotnet build command resolved from project command checklist (see overrides.kb)>"
+    - "<dotnet test command resolved from project command checklist with changed-scope filter>"
+  comparison_range_policy:
+    default: working_tree_first_then_branch_delta
+    decided_branch_source: feature_branch_or_current_branch_fallback
+    commit_or_snapshot_override_requires: [base_commit, head_commit]
+
+# Per-PR deviations from the policy defaults (leave empty to accept defaults).
+# Example keys: min_line_coverage_percent, skip_changelog_review, skip_coverage_run,
+#               additional_verification_commands, extra_scope_areas,
+#               kb (checklist/command identifiers per project, e.g. file ids).
+overrides: {}
+
+approval:
+  approved_by_user: false
+  approved_at:
+  notes:

@@ -32,7 +32,7 @@ Use this skill to review an existing design or diff. It is a finding-producing s
 1. Establish the intended behavior from the request, story, change artifact, requirement, or existing authority. Record missing expectations as review limits.
 2. Read the generic review guide and inspect the actual diff, affected symbols, dependency path, registrations, runtime path, tests, and operational configuration.
 3. Select modular review by default. Select distributed review only for a remote boundary, asynchronous messaging, independent deployment, eventual consistency, distributed transaction, resilience policy, or distributed observability concern.
-4. Discover applicable project authority dynamically. Use the knowledge-base index (locate the knowledge-base directory by name, then read its index) when present as a retrieval map, search its linked topics and the applicable ADR directory/registry by decision area, and verify authority status. Never require a particular knowledge filename or ADR number.
+4. Discover applicable project authority dynamically. Use the knowledge-base index (via $onu-documentation-finder) when present as a retrieval map, search its linked topics and the applicable ADR directory/registry by decision area, and verify authority status. Never require a particular knowledge filename or ADR number.
 5. Apply only the lenses supported by evidence: ownership, dependency/composition, integration/data, evolution/duplication, operational fitness, and decision traceability.
 6. Route a specialist only when its trigger applies; specialists provide constraints or findings and do not duplicate this review.
 7. Report findings first, then impact, evidence, smallest corrective direction, residual risk, and verification gaps.

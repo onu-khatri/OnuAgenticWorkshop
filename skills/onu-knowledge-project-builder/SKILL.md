@@ -82,7 +82,7 @@ Gates A–H (defined in `references/knowledge-quality-gates.md`):
 
 ## References
 
-- the repository-topography knowledge (discover it through the knowledge-base index) — where to find evidence.
+- the repository-topography knowledge (via $onu-documentation-finder) — where to find evidence.
 - `references/knowledge-quality-gates.md` — gates A–H in full.
 - `references/knowledge-plan-template.md` — `*.kb_plan.md` shape.
 - `references/knowledge-artifact-template.md` — `*.pre-knowledge.md` / `*.knowledge.md` shape.

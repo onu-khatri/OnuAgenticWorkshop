@@ -15,7 +15,7 @@ Use this skill to select and apply the smallest proven .NET backend pattern that
 
 ## Knowledge routing
 
-1. Check the knowledge-base index (locate the knowledge-base directory by name, then read its index).
+1. Check the knowledge-base index (via $onu-documentation-finder).
 2. Read the API/application delivery topic for request flow, validation, mapping, error behavior, and test-boundary choices.
 3. Read the EF Core persistence topic for model, query, transaction, migration, or initialization choices.
 4. Read the target project's adaptation topic before applying project-specific frameworks, composition conventions, or abstractions.

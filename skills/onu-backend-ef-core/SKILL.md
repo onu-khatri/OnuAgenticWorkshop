@@ -20,7 +20,7 @@ Use this skill for persistence design that is migration-safe, reviewable, and co
 
 ## Design workflow
 
-1. Check the knowledge-base index (locate the knowledge-base directory by name, then read its index), then read the EF Core persistence topic.
+1. Check the knowledge-base index (via $onu-documentation-finder), then read the EF Core persistence topic.
 2. Read the target project's persistence knowledge before relying on local abstractions, schema conventions, migration tooling, or initialization rules.
 3. Start from the business behavior and data lifecycle, then identify the entity, relationship, query, transaction, migration, and rollout impact.
 4. Keep persistence configuration and adapters outside transport and application orchestration code.
