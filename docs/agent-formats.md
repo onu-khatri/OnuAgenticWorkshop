@@ -8,10 +8,13 @@ Each agent is one directory with a required `AGENT.md` entry point:
 
 ```text
 agents/
+├── AGENTS.md         # project instruction file (user-owned, not an agent)
 └── onu-<agent-name>/
     ├── AGENT.md       # required entry point
     └── references/    # optional supporting docs
 ```
+
+> **Naming**: an individual agent's entry point is `AGENT.md` (singular, like `SKILL.md`). The repository-level instruction file is `AGENTS.md` (plural) — it is user-owned project guidance, not an agent definition, and is never auto-generated or overridden by the installer.
 
 `AGENT.md` uses YAML frontmatter plus a Markdown body:
 
@@ -73,18 +76,19 @@ Each vendor in `agent-formats.json` declares how to serialize a canonical agent:
 | `extension` | output file extension |
 | `filename` | filename template; `{name}` is replaced with the agent name |
 | `locations` | `project` and `user` install directories |
+| `instructions` | `project` and `user` instruction file paths (for agent registration) |
 | `required` | vendor-native fields that must be present |
 | `fieldMap` | canonical field → vendor-native key mapping |
 | `unsupported` | canonical fields the vendor cannot represent (dropped) |
 
 Supported vendors:
 
-| Vendor | Format | File | Project | User |
-| --- | --- | --- | --- | --- |
-| Claude Code | YAML + Markdown | `<name>.md` | `.claude/agents/` | `~/.claude/agents/` |
-| Codex | TOML | `<name>.toml` | `.codex/agents/` | `~/.codex/agents/` |
-| GitHub Copilot | YAML + Markdown | `<name>.agent.md` | `.github/agents/` | `~/.github/agents/` |
-| OpenCode | YAML + Markdown | `<name>.md` | `.opencode/agent/` | `~/.config/opencode/agent/` |
+| Vendor | Format | File | Project | User | Instruction file |
+| --- | --- | --- | --- | --- | --- |
+| Claude Code | YAML + Markdown | `<name>.md` | `.claude/agents/` | `~/.claude/agents/` | `CLAUDE.md` |
+| Codex | TOML | `<name>.toml` | `.codex/agents/` | `~/.codex/agents/` | `AGENTS.md` |
+| GitHub Copilot | YAML + Markdown | `<name>.agent.md` | `.github/agents/` | `~/.github/agents/` | `AGENTS.md` |
+| OpenCode | YAML + Markdown | `<name>.md` | `.opencode/agent/` | `~/.config/opencode/agent/` | `AGENTS.md` |
 
 ## Field mapping and sentinels
 
@@ -103,7 +107,7 @@ When a canonical field is absent from `AGENT.md`, or is listed in a vendor's `un
 ## Adding a vendor
 
 1. Add the vendor to `bin/installers/constants.js` (`CLIENTS` map) with its skill `project`/`user` locations and `label`.
-2. Add a matching entry to `agent-formats.json` under `vendors` with `label`, `format`, `extension`, `filename`, `locations`, `required`, `fieldMap`, and `unsupported`.
+2. Add a matching entry to `agent-formats.json` under `vendors` with `label`, `format`, `extension`, `filename`, `locations`, `instructions`, `required`, `fieldMap`, and `unsupported`.
 3. Add the vendor to the `CLIENT_OPTIONS` list in `bin/install.js` so it appears in the interactive selection.
 4. Update the vendor tables in `README.md` and this document.
 
@@ -116,3 +120,22 @@ When a canonical field is absent from `AGENT.md`, or is listed in a vendor's `un
 3. `scripts/validate.py` will then validate the field's presence, type, and constraints in every `AGENT.md`.
 
 The installer (`bin/installers/agents.js`) reads the `fieldMap` generically, so no installer code changes are required to pick up a new field or vendor.
+
+## Agent registration in instruction files
+
+The installer can append the installed-agent catalog to each vendor's instruction file (declared in `instructions`). This is controlled by `registerAgentsInInstructions` (default `true`) and the `--register-agents` / `--no-register-agents` flags:
+
+- Agents are not installed → the instruction file is untouched.
+- `registerAgentsInInstructions` is `true` (default) → the catalog is written automatically.
+- `registerAgentsInInstructions` is `false` → the installer asks interactively; in non-interactive runs it is skipped.
+
+The catalog is injected as a marked, idempotent section:
+
+```text
+<!-- BEGIN onu-agentic-workshop:agents -->
+## Agents
+- **onu-code-reviewer** — Defect-first reviewer...
+<!-- END onu-agentic-workshop:agents -->
+```
+
+On reinstall, only the marked section is replaced, preserving any other content. Vendors that share an instruction file (Codex, Copilot, and OpenCode all use `AGENTS.md`) are written once.

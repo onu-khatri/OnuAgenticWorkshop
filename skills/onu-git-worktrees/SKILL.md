@@ -1,11 +1,11 @@
 ---
 name: onu-git-worktrees
-description: Safely create, validate, operate, and clean up isolated Git worktrees for scalable the target project issue delivery. Use when parallel work, a clean checkout, or branch isolation is required.
+description: Safely create, validate, operate, and clean up isolated Git worktrees for scalable parallel development. Use when parallel work, a clean checkout, or branch isolation is required.
 ---
 
 # Git Worktrees
 
-Use this skill to create reproducible isolated workspaces without stashing or switching the primary checkout. It is the worktree authority for `$onu-openspec-workflow`; use `$onu-git-workflows` for history surgery and `$onu-git-commit` for commits. It may create a worktree only from an explicit implementation handoff that proves proposal validation, Definition-of-Ready completion, user implementation approval, canonical issue/change identity, base branch, and owning agent.
+Use this skill to create reproducible isolated workspaces without stashing or switching the primary checkout. It is the worktree authority for `$onu-openspec-workflow`; use `$onu-git-workflows` for history surgery and `$onu-git-commit` for commits. It may create a worktree only from an explicit implementation handoff that proves implementation approval, canonical change/issue identity, base branch, and owning agent. For issue-driven work the handoff must also prove proposal validation and Definition-of-Ready completion; a plain-language development request does not require those OpenSpec gates.
 
 ## Use this skill when
 
@@ -34,7 +34,7 @@ Confirm the requested issue/story ID, target base branch, worktree path, branch 
 
 ## Create workflow
 
-0. Require the caller's implementation-handoff evidence before any filesystem or Git mutation. If proposal validation, Definition of Ready, explicit implementation approval, issue/change identity, base branch, or owner is missing, stop and return the missing evidence. Do not create a worktree for discovery, issue selection, interview, proposal drafting, proposal validation, or readiness review.
+0. Require the caller's implementation-handoff evidence before any filesystem or Git mutation. If implementation approval, change/issue identity, base branch, or owner is missing, stop and return the missing evidence. For issue- or OpenSpec-driven work, proposal validation and Definition of Ready are additionally required. Do not create a worktree for discovery, issue selection, interview, proposal drafting, proposal validation, or readiness review.
 
 1. Confirm the repository and branch with the preflight checks above. Resolve the repository root before interpreting relative paths.
 
@@ -43,7 +43,16 @@ git rev-parse --show-toplevel
 git branch --show-current
 ```
 
-2. Choose the canonical project-local `.worktrees/gh-<issue-number>-<short-kebab-slug>` directory and verify that the directory itself is ignored:
+2. Propose a default branch name from the change/issue, then ask the user to
+   confirm it or provide their own. Prefer the user's decision; never create a
+   branch the user has not approved. Suggested defaults:
+   - plain work: `feature/<short-kebab-slug>`
+   - issue work: `gh-<issue-number>-<short-kebab-slug>`
+   - OpenSpec work: `openspec/<change-name>`
+   Use `$onu-workflow-user-interview` (or one focused question) to confirm or
+   override the branch name.
+
+3. Choose a deterministic project-local `.worktrees/<short-kebab-slug>` directory and verify that the directory itself is ignored:
 
 ```bash
 git check-ignore -q .worktrees
@@ -51,32 +60,45 @@ git check-ignore -q .worktrees
 
 If it is not ignored, stop and request or apply the repository-approved ignore change before creating a worktree. Do not silently append to `.gitignore` while the worktree operation is in progress.
 
-3. Verify the base branch exists and is current enough for the issue plan, then create the worktree with a new branch:
+4. Verify the base branch exists and is current enough for the plan, then create the worktree with the user-approved branch name:
 
 ```bash
-git worktree add .worktrees/gh-<issue-number>-<short-kebab-slug> -b openspec/gh-<issue-number>-<short-kebab-slug>
+git worktree add .worktrees/<short-kebab-slug> -b <user-approved-branch-name>
 ```
 
 Use `--` for path boundaries where applicable. Do not use `-B` or force an existing branch unless the user explicitly requests recovery and the target has been verified.
 
-4. Validate the new worktree before implementation:
+5. Validate the new worktree before implementation:
 
 ```bash
-   git -C .worktrees/gh-<issue-number>-<short-kebab-slug> status --short
-   git -C .worktrees/gh-<issue-number>-<short-kebab-slug> branch --show-current
-   git -C .worktrees/gh-<issue-number>-<short-kebab-slug> log -1 --oneline
+   git -C .worktrees/<short-kebab-slug> status --short
+   git -C .worktrees/<short-kebab-slug> branch --show-current
+   git -C .worktrees/<short-kebab-slug> log -1 --oneline
 ```
 
 Then run the smallest relevant baseline checks:
    - Backend: `dotnet build application\<TargetProject>App.slnx`
    - Frontend: `npm install` then `npm run check`
-5. Record the worktree path and branch in the source story frontmatter, then work inside the worktree. The original checkout stays untouched.
+
+6. Write a per-worktree context record to the worktree's temp folder so each
+   branch keeps its own session and context. Store it at
+   `.worktrees/<short-kebab-slug>/.tmp/onu-worktree.json` with:
+   - `branch` (the user-approved name)
+   - `baseBranch`
+   - `change` / `issue` identity when present
+   - `owner` (owning agent)
+   - `purpose` (objective)
+   - `createdAt` timestamp
+
+   Keep this context separate per branch/worktree; do not reuse it for a
+   different change. Then work inside the worktree; the original checkout stays
+   untouched.
 
 ## Parallel delivery rules
 
-- Use one worktree per GitHub issue or independently owned slice.
+- Use one worktree per independently owned change (issue or slice).
 - Do not parallelize changes to the same migration, shared contract, composition root, shared UI primitive, or generated file without an explicit coordinating owner.
-- Use deterministic names containing the stable story ID; do not use generic names such as `feature` or `work`.
+- Use deterministic names containing the stable change/issue ID; do not use generic names such as `work`.
 - Each worktree must have one owning agent and one stated base branch.
 - Do not run cleanup while an agent, terminal, test process, or editor still has the worktree open.
 
@@ -102,6 +124,6 @@ If removal reports uncommitted changes, stop and show the path and status. Do no
 ## Definition of Done
 
 - Repository, branch, path, and existing worktree state were verified before mutation.
-- Worktree was created under an ignored directory with a fresh deterministic `openspec/` branch.
+- Worktree was created under an ignored directory with a fresh deterministic feature branch.
 - Baseline checks and the initial branch/worktree identity were recorded before implementation starts.
 - Worktree is removed only after branch completion and clean status, or the remaining changes are explicitly handed off.

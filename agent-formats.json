@@ -157,6 +157,10 @@
         "project": ".claude/agents",
         "user": "~/.claude/agents"
       },
+      "instructions": {
+        "project": "CLAUDE.md",
+        "user": "~/.claude/CLAUDE.md"
+      },
       "required": ["name", "description"],
       "fieldMap": {
         "name": "name",
@@ -195,6 +199,10 @@
       "locations": {
         "project": ".codex/agents",
         "user": "~/.codex/agents"
+      },
+      "instructions": {
+        "project": "AGENTS.md",
+        "user": "~/.codex/AGENTS.md"
       },
       "required": ["name", "description", "developer_instructions"],
       "fieldMap": {
@@ -235,6 +243,10 @@
         "project": ".github/agents",
         "user": "~/.github/agents"
       },
+      "instructions": {
+        "project": "AGENTS.md",
+        "user": "~/.github/AGENTS.md"
+      },
       "required": ["description"],
       "fieldMap": {
         "name": "name",
@@ -273,6 +285,10 @@
       "locations": {
         "project": ".opencode/agent",
         "user": "~/.config/opencode/agent"
+      },
+      "instructions": {
+        "project": "AGENTS.md",
+        "user": "~/.config/opencode/AGENTS.md"
       },
       "required": ["description"],
       "fieldMap": {

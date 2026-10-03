@@ -8,7 +8,8 @@ import { loadSettings } from './installers/settings.js';
 import { chooseMany, chooseOne, confirm, promptText } from './installers/prompts.js';
 import { fetchRepository } from './installers/source.js';
 import { buildPlan, discoverSkills } from './installers/skills.js';
-import { buildAgentPlan, discoverAgents, loadAgentFormats } from './installers/agents.js';
+import { agentCatalog, buildAgentPlan, discoverAgents, loadAgentFormats } from './installers/agents.js';
+import { instructionTargets, registerAgents as registerAgentsInFiles } from './installers/instructions.js';
 import { install, printPlan } from './installers/install.js';
 
 const CLIENT_OPTIONS = [
@@ -43,12 +44,20 @@ async function resolveModel(args, wantAgents) {
   return answer.trim() || null;
 }
 
+async function resolveRegisterAgents(args, source, wantAgents) {
+  if (!wantAgents) return false;
+  if (args.registerAgents !== null) return args.registerAgents;
+  if (source.registerAgentsInInstructions) return true;
+  return isInteractive() ? await confirm('Add agent registration to your instruction file?') : false;
+}
+
 function buildAgentInstallation(fetched, source, clients, scope, cwd, wantAgents, modelOverride) {
-  if (!wantAgents) return [];
+  if (!wantAgents) return { plan: [], agents: [], formats: null };
   const formats = loadAgentFormats();
-  if (!formats) return [];
+  if (!formats) return { plan: [], agents: [], formats: null };
   const agents = discoverAgents(fetched.repoDir, source.agentsPath);
-  return buildAgentPlan(clients, scope, cwd, agents, formats, modelOverride);
+  const plan = buildAgentPlan(clients, scope, cwd, agents, formats, modelOverride);
+  return { plan, agents, formats };
 }
 
 async function main() {
@@ -65,12 +74,13 @@ async function main() {
   const scope = await resolveScope(args, cwd);
   const wantAgents = await resolveAgents(args);
   const modelOverride = await resolveModel(args, wantAgents);
+  const registerAgents = await resolveRegisterAgents(args, source, wantAgents);
 
   const fetched = fetchRepository(source);
   try {
     const skills = discoverSkills(fetched.repoDir, source.skillsPath);
     const plan = buildPlan(clients, scope, cwd, skills, source.preferSharedPathForMultipleClients);
-    const agentPlan = buildAgentInstallation(fetched, source, clients, scope, cwd, wantAgents, modelOverride);
+    const { plan: agentPlan, agents, formats } = buildAgentInstallation(fetched, source, clients, scope, cwd, wantAgents, modelOverride);
 
     printPlan(plan, agentPlan, scope, source, fetched.commit);
 
@@ -83,6 +93,19 @@ async function main() {
     }
 
     install(plan, agentPlan, { dryRun: args.dryRun, source, commit: fetched.commit });
+
+    if (registerAgents && agents.length && formats) {
+      const targets = instructionTargets(clients, scope, cwd, formats);
+      registerAgentsInFiles(targets, agentCatalog(agents), args.dryRun);
+
+      if (!args.dryRun) {
+        console.log('\nUsing your own agents? The installed onu-* agents are defaults.');
+        console.log('To prefer your own implementation/planning agents, name them in your');
+        console.log('project AGENTS.md under "Skill and agent routing" — your explicit');
+        console.log('routing there takes priority over the installed agent catalog.');
+      }
+    }
+
     console.log(args.dryRun ? '\nDry run complete.' : '\nDone.');
   } finally {
     if (fetched.tempRoot) fs.rmSync(fetched.tempRoot, { recursive: true, force: true });

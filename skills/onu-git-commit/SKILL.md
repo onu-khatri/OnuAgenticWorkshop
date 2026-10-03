@@ -36,8 +36,8 @@ git diff --cached --stat
 git branch --show-current
 ```
 
-- If on `main`, use `$onu-delivery-issues-kickoff` and `$onu-git-worktrees` to create the canonical `openspec/...` branch first.
-- Confirm the issue/story ID and intended files before staging. Preserve unrelated staged or unstaged changes.
+- If on `main`, create a feature branch first: use `$onu-git-worktrees` for a direct change, or `$onu-delivery-issues-kickoff` when the work is issue-driven. Never commit directly to `main`.
+- Confirm the intended files (and the issue/story ID when present) before staging. Preserve unrelated staged or unstaged changes.
 - Stop if a merge, rebase, cherry-pick, or bisect is active until its state is understood.
 
 ## Commit boundaries
@@ -90,7 +90,7 @@ git diff --cached --check
 ## Target project scope
 
 - Use the module as scope when it helps: `feat(<module>): ...`, `fix(<module>): ...`.
-- Reference GitHub issue and user story IDs in the footer (`Refs #123`, `Refs US-7.2`) so commits stay traceable. Preserve multiple references when a coordinated change serves more than one issue.
+- When available, reference GitHub issue and user story IDs in the footer (`Refs #123`, `Refs US-7.2`) so commits stay traceable. Preserve multiple references when a coordinated change serves more than one issue.
 - Do not claim tests, builds, or review completion in the commit message unless they actually ran; report verification in the handoff.
 
 ## Examples

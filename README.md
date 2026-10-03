@@ -39,7 +39,8 @@ Edit `installer.config.json` before publishing the npm installer:
     "agentsPath": "agents"
   },
   "install": {
-    "preferSharedPathForMultipleClients": true
+    "preferSharedPathForMultipleClients": true,
+    "registerAgentsInInstructions": true
   }
 }
 ```
@@ -147,6 +148,25 @@ The installer also discovers agents from the source repository's `agentsPath` (d
 
 Because each vendor's native agent format differs (TOML for Codex, YAML frontmatter + Markdown for Claude Code, Copilot, and OpenCode), agents are always installed to each selected vendor's native location — there is no shared multi-vendor fallback for agents. Field mapping between the canonical frontmatter and each vendor's required parameters is declared in `agent-formats.json`.
 
+## Agent registration in instruction files
+
+When agents are installed, the installer can also append a short, auto-generated catalog of the installed agents to the vendor's project instruction file, so the main agent knows when to delegate to them. The catalog is generated from the individual `agents/onu-*/AGENT.md` files (mirrored in the repository's `agents/AGENTS.md`) and is injected as a marked, idempotent section:
+
+| Vendor | Instruction file |
+| --- | --- |
+| Claude Code | `CLAUDE.md` |
+| Codex | `AGENTS.md` |
+| GitHub Copilot | `AGENTS.md` |
+| OpenCode | `AGENTS.md` |
+
+Behavior is controlled by `registerAgentsInInstructions` (default `true`) and the `--register-agents` / `--no-register-agents` flags:
+
+- Agents are not installed → the instruction file is not touched.
+- `registerAgentsInInstructions` is `true` (default) → the catalog is written automatically.
+- `registerAgentsInInstructions` is `false` → the installer asks whether to add the registration at install time (interactive only; skipped in non-interactive runs).
+
+The injected section is wrapped in `<!-- BEGIN onu-agentic-workshop:agents -->` / `<!-- END onu-agentic-workshop:agents -->` markers and is clearly labelled as auto-generated. On reinstall, the installer replaces only that marked section, preserving any other content the user has written in the file. When Codex, Copilot, and OpenCode all target the same `AGENTS.md`, it is written once. The repository's `agents/AGENTS.md` is a separate, user-owned instruction file and is never auto-appended or overridden.
+
 ## Source provenance
 
 After a successful install, the CLI writes:
@@ -219,6 +239,8 @@ Options:
 --scope <scope>       project | user
 --agents              Also install agents (default: ask interactively)
 --no-agents           Skip agent installation
+--register-agents     Register installed agents in the vendor instruction file
+--no-register-agents  Do not register agents in the instruction file
 --model <id>          Model to set on generated agents (leave blank to omit)
 --force               Replace existing skills without prompting
 --dry-run             Fetch and preview without writing skill files
@@ -237,6 +259,7 @@ onu-agentic-workshop/
 │       └── scripts/
 │           └── Find-AgentSkill.ps1
 ├── agents/
+│   ├── AGENTS.md            # project instruction file (user-owned)
 │   └── onu-code-reviewer/
 │       └── AGENT.md
 ├── bin/

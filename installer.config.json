@@ -6,6 +6,7 @@
     "agentsPath": "agents"
   },
   "install": {
-    "preferSharedPathForMultipleClients": true
+    "preferSharedPathForMultipleClients": true,
+    "registerAgentsInInstructions": true
   }
 }

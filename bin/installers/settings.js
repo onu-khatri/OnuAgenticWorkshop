@@ -46,5 +46,6 @@ export function loadSettings(args) {
     skillsPath,
     agentsPath,
     preferSharedPathForMultipleClients: settings.install?.preferSharedPathForMultipleClients !== false,
+    registerAgentsInInstructions: settings.install?.registerAgentsInInstructions !== false,
   };
 }

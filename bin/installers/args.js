@@ -7,6 +7,7 @@ const DEFAULT_ARGS = {
   dryRun: false,
   agents: null,
   model: null,
+  registerAgents: null,
   repository: null,
   ref: null,
   localSource: null,
@@ -34,6 +35,8 @@ Install options:
   --force               Overwrite existing skill directories without prompting
   --agents              Also install agents (default: ask interactively)
   --no-agents           Skip agent installation
+  --register-agents     Register installed agents in the vendor instruction file
+  --no-register-agents  Do not register agents in the instruction file
   --model <id>          Model to set on generated agents (leave blank to omit)
   --dry-run             Fetch and show the plan without writing skill files
   -h, --help            Show this help
@@ -75,6 +78,10 @@ export function parseArgs(argv) {
       args.agents = true;
     } else if (arg === '--no-agents') {
       args.agents = false;
+    } else if (arg === '--register-agents') {
+      args.registerAgents = true;
+    } else if (arg === '--no-register-agents') {
+      args.registerAgents = false;
     } else if (arg === '--model') {
       args.model = valueAfter(i, arg).trim() || null;
       i += 1;

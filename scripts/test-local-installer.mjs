@@ -54,6 +54,15 @@ try {
     throw new Error('Provenance lock did not record installed agents.');
   }
 
+  const agentsMd = path.join(projectDir, 'AGENTS.md');
+  const claudeMd = path.join(projectDir, 'CLAUDE.md');
+  if (!fs.existsSync(agentsMd) || !fs.readFileSync(agentsMd, 'utf8').includes('onu-code-reviewer')) {
+    throw new Error('Agent registration was not written to AGENTS.md.');
+  }
+  if (!fs.existsSync(claudeMd) || !fs.readFileSync(claudeMd, 'utf8').includes('onu-code-reviewer')) {
+    throw new Error('Agent registration was not written to CLAUDE.md.');
+  }
+
   console.log('Local working-tree installer test passed.');
 } finally {
   fs.rmSync(projectDir, { recursive: true, force: true });

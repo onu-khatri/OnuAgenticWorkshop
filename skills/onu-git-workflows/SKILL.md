@@ -37,10 +37,10 @@ Identify whether the branch is local, shared, or pushed, record the target commi
 ## Target project conventions
 
 - The primary branch is `main`; never commit directly to it.
-- Feature branches use the canonical `openspec/gh-<issue-number>-<short-kebab-slug>` shape for issue work, or `openspec/<change-name>` without an issue.
+- Feature branches use a short, descriptive kebab-case slug. For issue-driven work use `gh-<issue-number>-<short-kebab-slug>`; for OpenSpec-driven work use `openspec/<change-name>`; otherwise use `feature/<short-kebab-slug>`.
 - Prefer `--force-with-lease` over `--force`.
 - Rebase only local, unpushed commits; merge or update from the remote for shared branches.
-- Use stable story/issue IDs in branch names, commits, and PR references.
+- When available, use stable story/issue IDs in branch names, commits, and PR references.
 - Prefer small, independently verifiable commits so parallel issue work can be reviewed or cherry-picked safely.
 
 ## Core techniques

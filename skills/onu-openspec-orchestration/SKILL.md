@@ -81,10 +81,11 @@ authority for artifact order, context files, operation guidance, and status.
 
 ### Repository overlay
 
-Read `$onu-openspec-repository-policy` with every OpenSpec transition. Generated
+Read `$onu-openspec-workflow`'s repository policy with every OpenSpec transition. Generated
 files under `.agents/skills/` provide the OpenSpec command contract; the
-repository overlay supplies target-project-specific gates and must not be
-copied into or patched into generated files.
+repository overlay (now owned by `$onu-openspec-workflow`) supplies
+target-project-specific gates and must not be copied into or patched into
+generated files.
 
 Before selecting implementation work, enforce the repository implementation-
 agent gate: run `$onu-workflow-development-entry`, route the exact OpenSpec task

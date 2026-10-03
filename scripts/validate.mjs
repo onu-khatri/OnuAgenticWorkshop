@@ -55,6 +55,12 @@ function validateAgentFormats(formats) {
     if (!vendor.fieldMap || typeof vendor.fieldMap !== 'object') {
       throw new Error(`agent-formats.json vendor "${name}" is missing its fieldMap.`);
     }
+    if (vendor.instructions) {
+      const instructions = vendor.instructions;
+      if (!instructions.project || !instructions.user) {
+        throw new Error(`agent-formats.json vendor "${name}" instructions must have project/user locations.`);
+      }
+    }
   }
 }
 

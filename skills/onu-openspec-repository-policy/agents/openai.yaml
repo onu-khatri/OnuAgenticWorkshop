@@ -1,4 +1,0 @@
-interface:
-  display_name: "OpenSpec Repository Policy"
-  short_description: "Apply the target project OpenSpec workflow rules"
-  default_prompt: "Use $onu-openspec-repository-policy alongside generated OpenSpec workflows."

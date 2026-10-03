@@ -1,6 +1,6 @@
 ---
 name: onu-openspec-workflow
-description: Coordinate the target project OpenSpec proposal, approval, worktree implementation, verification, and closeout with proposal work in the main checkout and code work isolated to the approved worktree.
+description: Coordinate the target project OpenSpec proposal, approval, worktree implementation, verification, and closeout with proposal work in the main checkout and code work isolated to the approved worktree. Also applies the repository-policy overlay to every OpenSpec transition.
 ---
 
 # OpenSpecWorkflow
@@ -8,9 +8,25 @@ description: Coordinate the target project OpenSpec proposal, approval, worktree
 Use this skill for OpenSpec proposal work, proposal approval, implementation handoff, implementation continuation, verification, synchronization, archiving, and change closeout. It is the OpenSpec lifecycle authority. `$onu-delivery-issues-kickoff` supplies issue intake and readiness evidence; `$onu-openspec-orchestration` and the OpenSpec skills supply the stateful planning and implementation mechanics.
 
 The generated workflows under `.agents/skills/` own their CLI-specific
-operation contracts. Read `$onu-openspec-repository-policy` as the repository
-overlay, and do not edit generated workflow files to restore local policy after
-an OpenSpec refresh.
+operation contracts.
+
+## Repository policy
+
+This skill is the repository-policy overlay for OpenSpec. OpenSpec-managed
+skills under `.agents/skills/` are generated files: do not edit them directly to
+add repository-specific behavior, and do not patch them to restore local policy
+after an OpenSpec refresh (`openspec update` owns their contents). Keep
+project-specific policy in `AGENTS.md`; apply the following whenever an OpenSpec
+workflow is used:
+
+- Read `AGENTS.md` and the knowledge-base index (via $onu-documentation-finder) before planning or delivery.
+- Use `$onu-workflow-development-entry` before any development edit; its result is a gate, not an implementation handoff by itself.
+- Keep proposal artifacts in the main checkout and implementation work in the approved canonical worktree. Create or reuse a worktree only after proposal, Definition-of-Ready, approval, issue/change identity, base branch, and owner evidence are present.
+- Keep `$onu-openspec-orchestration` and this skill as the lifecycle authorities. The generated OpenSpec skill remains responsible for its own CLI contract, artifact context, and task checkbox rules.
+- Enforce the implementation-agent gate before any implementation transition. A valid OpenSpec proposal and an approved worktree do not by themselves authorize the parent agent to edit production code.
+- Preserve unrelated changes and distinguish local validation, commit, push, hosted PR state, and CI state in reports.
+
+When a new OpenSpec release changes a generated workflow, review the generated diff against this policy. Update this overlay only when the repository policy itself changes; do not patch generated files to restore local rules.
 
 ## When to Use
 

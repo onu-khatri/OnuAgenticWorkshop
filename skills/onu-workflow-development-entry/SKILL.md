@@ -77,9 +77,9 @@ For research/planning shape, route `$onu-research-deep`, `$onu-workflow-user-int
 
 ## Gate D: decide readiness
 
-Return `PASS` only when the requested behavior, ownership, dependencies, required specialist route, implementation owner, and proportionate verification are clear, with no unresolved blocking decision. Return `BLOCKED` when evidence, approval, dependency, issue/story traceability, or a required capability is missing. Include the exact missing item and the next safe action.
+Return `PASS` only when the requested behavior, ownership, dependencies, required specialist route, implementation owner, and proportionate verification are clear, with no unresolved blocking decision. Return `BLOCKED` when evidence, approval, dependency, or a required capability is missing. Issue/story traceability is a blocker only for issue- or story-driven work; a plain-language development request does not require a user story, GitHub issue, or OpenSpec change. Include the exact missing item and the next safe action.
 
-The gate does not replace approval checkpoints owned by `$onu-delivery-issues-kickoff`, `$onu-delivery-user-story-kickoff`, `$onu-openspec-workflow`, OpenSpec, or the user. For issue execution, a PASS is necessary but not sufficient: `$onu-openspec-workflow` must still obtain proposal approval and the user's worktree-creation confirmation before a worktree or implementation agent is created.
+The gate does not replace approval checkpoints owned by `$onu-delivery-issues-kickoff`, `$onu-delivery-user-story-kickoff`, `$onu-openspec-workflow`, OpenSpec, or the user. For issue execution, a PASS is necessary but not sufficient: `$onu-openspec-workflow` must still obtain proposal approval and the user's worktree-creation confirmation before a worktree or implementation agent is created. For a direct development request (no issue, story, or OpenSpec change), a PASS is sufficient to hand off to the routed implementation workflow; OpenSpec is optional and must not be imposed.
 
 ## Required output
 

@@ -22,10 +22,19 @@ export function discoverAgents(repoDir, agentsPath) {
     .filter((agent) => fs.existsSync(path.join(agent.source, 'AGENT.md')));
 }
 
-function resolveLocation(location, cwd) {
+export function resolveLocation(location, cwd) {
   if (location.startsWith('~/')) return path.join(os.homedir(), location.slice(2));
   if (location.startsWith('~')) return path.join(os.homedir(), location.slice(1));
   return path.resolve(cwd, location);
+}
+
+export function agentCatalog(agents) {
+  return agents.map((agent) => {
+    const raw = fs.readFileSync(path.join(agent.source, 'AGENT.md'), 'utf8');
+    const { frontmatter } = splitFrontmatter(raw);
+    const data = parseYaml(frontmatter);
+    return { name: data.name || agent.name, description: data.description || '' };
+  });
 }
 
 function mapFields(data, fieldMap, modelOverride) {
