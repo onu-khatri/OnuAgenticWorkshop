@@ -24,7 +24,7 @@ description: What the skill does and when an agent should use it.
 ---
 ```
 
-For portable skills, keep `name` lowercase kebab-case, match it to the directory name, and keep it within 64 characters. Keep `description` precise and within 1024 characters.
+For portable skills, keep `name` lowercase kebab-case, prefix it with `onu-`, match it to the directory name, and keep it within 64 characters. Keep `description` precise and within 1024 characters.
 
 ## Progressive disclosure
 
@@ -80,7 +80,7 @@ agents/
     └── references/   # optional supporting docs
 ```
 
-`AGENT.md` uses the same YAML frontmatter convention as `SKILL.md`. The full canonical field set and each vendor's serialization mapping are declared in `agent-formats.json`. The frontmatter requires `name` (kebab-case, matching the directory) and `description`; the Markdown body is the agent's instructions.
+`AGENT.md` uses the same YAML frontmatter convention as `SKILL.md`. The full canonical field set and each vendor's serialization mapping are declared in `agent-formats.json`. The frontmatter requires `name` (kebab-case with the `onu-` prefix, matching the directory) and `description`; the Markdown body is the agent's instructions.
 
 Unlike skills, agent files are **not** copied verbatim. Each vendor uses a different native agent format:
 
@@ -89,11 +89,17 @@ Unlike skills, agent files are **not** copied verbatim. Each vendor uses a diffe
 - **GitHub Copilot** expects YAML frontmatter + Markdown (`description` required, plus `tools`, `model`, `target`, `user-invocable`, `disable-model-invocation`, `mcp-servers`, `metadata`).
 - **OpenCode** expects YAML frontmatter + Markdown (`description` required, plus `mode`, `model`, `temperature`, `top_p`, `permission`, `steps`, `hidden`, `color`).
 
-The installer reads `agent-formats.json`, maps canonical frontmatter fields to each vendor's keys, drops unsupported fields, and serializes the result in the vendor's native format. Canonical-only parameters that a vendor cannot represent are omitted rather than emitted incorrectly.
+The installer reads `agent-formats.json`, maps canonical frontmatter fields to each vendor's keys, drops unsupported fields, and serializes the result in the vendor's native format. Canonical-only parameters that a vendor cannot represent are omitted rather than emitted incorrectly. See [`agent-formats.md`](agent-formats.md) for the full canonical field set and vendor serialization details.
+
+Two rules keep agents portable across users and models:
+
+- **Do not hardcode `model`.** Leave `model` out of the repository's `AGENT.md`. The model is supplied by the user at install time (the `--model` flag or the interactive prompt) or by adding a `model` field to their own agent. When no model is provided, the generated file omits it so each vendor falls back to its own default or inherited model.
+- **Reference skills by name, not by install path.** When an agent needs a supporting reference file, reference the owning skill (`$onu-...`) and state the `references/...` path relative to that skill. Do not hardcode an absolute install location such as `.agents/skills/...`, because it can change on the user's system at runtime.
 
 ## References
 
 - Agent Skills specification: https://agentskills.io/specification
+- Claude Code skills: https://docs.anthropic.com/en/docs/claude-code/skills
 - Codex skills: https://developers.openai.com/codex/skills
 - GitHub Copilot Agent Skills: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills
 - OpenCode skills: https://opencode.ai/docs/skills

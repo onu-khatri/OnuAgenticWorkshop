@@ -2,7 +2,7 @@
 
 A reusable Agent Skills repository plus a lightweight `npx` installer for **Claude Code**, **Codex**, **GitHub Copilot**, and **OpenCode**.
 
-The important design rule is that the npm package is **not the skills payload**. When the CLI runs, it reads `installer.config.json`, fetches the configured Git repository/ref, discovers its `skills/` directory, and installs those skills into the selected client scope.
+The important design rule is that the npm package is **not the skills payload**. When the CLI runs, it reads `installer.config.json`, fetches the configured Git repository/ref, discovers its `skills/` and `agents/` directories, and installs those skills (and, optionally, agents) into the selected client scope.
 
 ## How installation works
 
@@ -10,7 +10,7 @@ The important design rule is that the npm package is **not the skills payload**.
 npx installer
      │
      ├─ reads installer.config.json
-     │     repository + ref + skillsPath
+     │     repository + ref + skillsPath + agentsPath
      │
       ├─ asks target clients (multi-select)
       │     Claude Code / Codex / GitHub Copilot / OpenCode
@@ -18,9 +18,12 @@ npx installer
      ├─ asks install scope
      │     Current project / User root
      │
+     ├─ asks whether to also install agents (opt-in)
+     │
      ├─ fetches the configured Git repository
      │
-     └─ copies its skill folders into the selected discovery location
+     └─ installs the selected skills and, optionally, agents into the
+        chosen discovery locations
 ```
 
 ## Configure the source repository
@@ -32,7 +35,8 @@ Edit `installer.config.json` before publishing the npm installer:
   "source": {
     "repository": "https://github.com/YOUR_ORG/onu-agentic-workshop.git",
     "ref": "main",
-    "skillsPath": "skills"
+    "skillsPath": "skills",
+    "agentsPath": "agents"
   },
   "install": {
     "preferSharedPathForMultipleClients": true
@@ -49,7 +53,8 @@ For managed/CI installs, prefer a release tag or immutable commit SHA instead of
   "source": {
     "repository": "https://github.com/acme/agent-skills.git",
     "ref": "v1.4.0",
-    "skillsPath": "skills"
+    "skillsPath": "skills",
+    "agentsPath": "agents"
   }
 }
 ```
@@ -68,6 +73,7 @@ Environment overrides are also supported:
 AGENT_SKILLS_REPOSITORY
 AGENT_SKILLS_REF
 AGENT_SKILLS_PATH
+AGENT_SKILLS_AGENTS_PATH
 ```
 
 ## Interactive installer
@@ -154,8 +160,9 @@ inside each target skill root. It records:
 - source repository
 - requested Git ref
 - resolved commit SHA
-- source `skillsPath`
+- source `skillsPath` and `agentsPath`
 - installed skill names
+- installed agent names
 - install timestamp
 
 This makes a moving ref such as `main` auditable and a pinned tag/SHA reproducible.
@@ -233,7 +240,8 @@ onu-agentic-workshop/
 │   └── onu-code-reviewer/
 │       └── AGENT.md
 ├── bin/
-│   └── install.js
+│   ├── install.js
+│   └── installers/          # installer modules (args, skills, agents, ...)
 ├── installer.config.json
 ├── agent-formats.json
 ├── docs/
@@ -245,7 +253,7 @@ A minimal portable skill:
 
 ```markdown
 ---
-name: my-skill
+name: onu-my-skill
 description: Describe what the skill does and when it should be used.
 ---
 
@@ -258,7 +266,7 @@ A minimal portable agent:
 
 ```markdown
 ---
-name: my-agent
+name: onu-my-agent
 description: Describe what the agent does and when to delegate to it.
 mode: subagent
 ---
@@ -266,9 +274,11 @@ mode: subagent
 Instructions that define the agent's behavior.
 ```
 
+Every skill and agent must use the `onu-` prefix on its `name` (matching the directory name) so it is discoverable and unambiguous within the shared namespace.
+
 The `model` field is intentionally not set in the repository's agents. Models are supplied by the user (via the `--model` flag, the interactive prompt, or by adding a `model` field to their own `AGENT.md`). When no model is provided, the generated agent files omit it so each vendor falls back to its own default or inherited model.
 
-See [`agent-formats.json`](agent-formats.json) for the full canonical frontmatter schema and the per-vendor field mapping.
+See [`agent-formats.json`](agent-formats.json) for the canonical frontmatter schema and the per-vendor field mapping, and [`docs/agent-formats.md`](docs/agent-formats.md) for a full explanation of the agent format, vendor serialization, and how to add a vendor or field.
 
 See [`docs/shared-skill-practices.md`](docs/shared-skill-practices.md) for the cross-client conventions and security/versioning practices used by this repository.
 
@@ -358,7 +368,7 @@ The available scripts are:
 | Script | Purpose |
 | --- | --- |
 | `npm run dev:install` | Interactive development install from the current working tree |
-| `npm run validate` | Validate skills plus Node.js syntax |
+| `npm run validate` | Validate skills, agents, JSON configs, and Node.js syntax |
 | `npm run test:local` | Isolated installer test against local skills |
 | `npm run bundle` | Create the distributable npm `.tgz` in `dist/` |
 | `npm run test:bundle` | Execute the packed `.tgz` through `npx` against local skills |
