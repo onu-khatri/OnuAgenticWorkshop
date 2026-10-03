@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 1,
+  "description": "Canonical agent format and per-vendor serialization mapping used by the installer to generate native agent files from AGENT.md sources.",
+  "canonical": {
+    "entryPoint": "AGENT.md",
+    "sourceFormat": "markdown+yaml",
+    "frontmatterDelimiter": "---",
+    "body": {
+      "role": "instructions",
+      "note": "Markdown below the frontmatter is the agent's system instructions (the 'prompt')."
+    },
+    "fields": {
+      "name": {
+        "type": "string",
+        "required": true,
+        "pattern": "^onu-[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "maxLength": 64,
+        "description": "Unique, portable agent identifier in lowercase kebab-case, prefixed with 'onu-'."
+      },
+      "description": {
+        "type": "string",
+        "required": true,
+        "maxLength": 1024,
+        "description": "What the agent does and when an agent should delegate to it."
+      },
+      "prompt": {
+        "type": "string",
+        "required": false,
+        "description": "Optional explicit instruction text. When omitted, the AGENT.md body is used."
+      },
+      "model": {
+        "type": "string",
+        "required": false,
+        "description": "Model identifier for this agent (vendor-specific format)."
+      },
+      "temperature": {
+        "type": "number",
+        "required": false,
+        "min": 0,
+        "max": 2,
+        "description": "Sampling temperature controlling response randomness."
+      },
+      "topP": {
+        "type": "number",
+        "required": false,
+        "min": 0,
+        "max": 1,
+        "description": "Nucleus sampling probability mass."
+      },
+      "reasoningEffort": {
+        "type": "string",
+        "required": false,
+        "enum": ["ultra", "max", "xhigh", "high", "medium", "low"],
+        "description": "Model reasoning-effort level where supported."
+      },
+      "mode": {
+        "type": "string",
+        "required": false,
+        "enum": ["primary", "subagent", "all"],
+        "default": "all",
+        "description": "How the agent can be used (primary, delegated subagent, or both)."
+      },
+      "tools": {
+        "type": "array",
+        "required": false,
+        "items": { "type": "string" },
+        "description": "Tool names or aliases the agent may use. Omit/empty semantics are vendor-specific."
+      },
+      "permissions": {
+        "type": "object",
+        "required": false,
+        "description": "Tool permission map using 'allow' | 'ask' | 'deny' (or nested glob patterns)."
+      },
+      "sandboxMode": {
+        "type": "string",
+        "required": false,
+        "enum": ["read-only", "workspace-write", "danger-full-access"],
+        "description": "Filesystem/sandbox access level for the agent."
+      },
+      "disabled": {
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "description": "Disable the agent without removing it."
+      },
+      "hidden": {
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "description": "Hide the agent from manual selection menus."
+      },
+      "userInvocable": {
+        "type": "boolean",
+        "required": false,
+        "default": true,
+        "description": "Whether a user can manually select this agent."
+      },
+      "disableModelInvocation": {
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "description": "Prevent automatic model-based invocation of this agent."
+      },
+      "maxSteps": {
+        "type": "number",
+        "required": false,
+        "minimum": 1,
+        "description": "Maximum agentic iterations before a text-only response is forced."
+      },
+      "color": {
+        "type": "string",
+        "required": false,
+        "description": "UI accent color (hex or theme token) for the agent."
+      },
+      "mcpServers": {
+        "type": "object",
+        "required": false,
+        "description": "MCP server definitions attached to this agent."
+      },
+      "target": {
+        "type": "string",
+        "required": false,
+        "enum": ["vscode", "github-copilot"],
+        "description": "Target environment or context for the agent."
+      },
+      "metadata": {
+        "type": "object",
+        "required": false,
+        "description": "Free-form key/value annotations for the agent."
+      },
+      "tags": {
+        "type": "array",
+        "required": false,
+        "items": { "type": "string" },
+        "description": "Discovery keywords for the agent."
+      },
+      "author": {
+        "type": "string",
+        "required": false,
+        "description": "Agent author or owning team."
+      },
+      "version": {
+        "type": "string",
+        "required": false,
+        "description": "Agent source version."
+      }
+    }
+  },
+  "vendors": {
+    "claude": {
+      "label": "Claude Code",
+      "format": "markdown+yaml",
+      "extension": ".md",
+      "filename": "{name}.md",
+      "bodyKey": "@body",
+      "locations": {
+        "project": ".claude/agents",
+        "user": "~/.claude/agents"
+      },
+      "required": ["name", "description"],
+      "fieldMap": {
+        "name": "name",
+        "description": "description",
+        "prompt": "@body",
+        "model": "model",
+        "tools": "tools",
+        "color": "color"
+      },
+      "unsupported": [
+        "temperature",
+        "topP",
+        "reasoningEffort",
+        "mode",
+        "permissions",
+        "sandboxMode",
+        "disabled",
+        "hidden",
+        "userInvocable",
+        "disableModelInvocation",
+        "maxSteps",
+        "mcpServers",
+        "target",
+        "metadata",
+        "tags",
+        "author",
+        "version"
+      ]
+    },
+    "codex": {
+      "label": "Codex",
+      "format": "toml",
+      "extension": ".toml",
+      "filename": "{name}.toml",
+      "bodyKey": "developer_instructions",
+      "locations": {
+        "project": ".codex/agents",
+        "user": "~/.codex/agents"
+      },
+      "required": ["name", "description", "developer_instructions"],
+      "fieldMap": {
+        "name": "name",
+        "description": "description",
+        "prompt": "developer_instructions",
+        "model": "model",
+        "reasoningEffort": "model_reasoning_effort",
+        "sandboxMode": "sandbox_mode",
+        "mcpServers": "mcp_servers"
+      },
+      "unsupported": [
+        "temperature",
+        "topP",
+        "mode",
+        "tools",
+        "permissions",
+        "disabled",
+        "hidden",
+        "userInvocable",
+        "disableModelInvocation",
+        "maxSteps",
+        "color",
+        "target",
+        "metadata",
+        "tags",
+        "author",
+        "version"
+      ]
+    },
+    "github": {
+      "label": "GitHub Copilot",
+      "format": "markdown+yaml",
+      "extension": ".agent.md",
+      "filename": "{name}.agent.md",
+      "bodyKey": "@body",
+      "locations": {
+        "project": ".github/agents",
+        "user": "~/.github/agents"
+      },
+      "required": ["description"],
+      "fieldMap": {
+        "name": "name",
+        "description": "description",
+        "prompt": "@body",
+        "model": "model",
+        "tools": "tools",
+        "target": "target",
+        "disableModelInvocation": "disable-model-invocation",
+        "userInvocable": "user-invocable",
+        "mcpServers": "mcp-servers",
+        "metadata": "metadata"
+      },
+      "unsupported": [
+        "temperature",
+        "topP",
+        "reasoningEffort",
+        "mode",
+        "permissions",
+        "sandboxMode",
+        "disabled",
+        "hidden",
+        "maxSteps",
+        "color",
+        "tags",
+        "author",
+        "version"
+      ]
+    },
+    "opencode": {
+      "label": "OpenCode",
+      "format": "markdown+yaml",
+      "extension": ".md",
+      "filename": "{name}.md",
+      "bodyKey": "@body",
+      "locations": {
+        "project": ".opencode/agent",
+        "user": "~/.config/opencode/agent"
+      },
+      "required": ["description"],
+      "fieldMap": {
+        "name": "@filename",
+        "description": "description",
+        "prompt": "@body",
+        "model": "model",
+        "temperature": "temperature",
+        "topP": "top_p",
+        "mode": "mode",
+        "permissions": "permission",
+        "disabled": "disable",
+        "hidden": "hidden",
+        "maxSteps": "steps",
+        "color": "color",
+        "mcpServers": "mcp"
+      },
+      "unsupported": [
+        "reasoningEffort",
+        "tools",
+        "sandboxMode",
+        "userInvocable",
+        "disableModelInvocation",
+        "target",
+        "metadata",
+        "tags",
+        "author",
+        "version"
+      ]
+    }
+  }
+}

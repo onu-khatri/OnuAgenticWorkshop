@@ -16,6 +16,7 @@ const result = spawnSync(npm, ['pack', '--json', '--pack-destination', distDir],
   cwd: repoRoot,
   encoding: 'utf8',
   stdio: ['ignore', 'pipe', 'inherit'],
+  shell: process.platform === 'win32',
 });
 
 if (result.error) throw result.error;

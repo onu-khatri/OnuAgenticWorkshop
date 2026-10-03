@@ -1,7 +1,7 @@
 {
   "name": "onu-agentic-workshop",
   "version": "0.5.0",
-  "description": "Install Agent Skills from a configured Git repository into Codex, GitHub Copilot, and OpenCode.",
+  "description": "Install Agent Skills from a configured Git repository into Claude Code, Codex, GitHub Copilot, and OpenCode.",
   "type": "module",
   "bin": {
     "onu-agentic-workshop": "./bin/install.js"
@@ -9,6 +9,7 @@
   "files": [
     "bin/",
     "installer.config.json",
+    "agent-formats.json",
     "README.md",
     "docs/"
   ],
@@ -16,7 +17,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "validate": "python3 scripts/validate.py && node --check bin/install.js && node --check scripts/build-tar.mjs && node --check scripts/test-local-installer.mjs && node --check scripts/test-packed-installer.mjs",
+    "validate": "node scripts/validate.mjs",
     "install:skills": "node bin/install.js",
     "dev:install": "node bin/install.js --local-source .",
     "bundle": "node scripts/build-tar.mjs",
@@ -28,6 +29,8 @@
   },
   "keywords": [
     "agent-skills",
+    "claude",
+    "claude-code",
     "codex",
     "github-copilot",
     "opencode",

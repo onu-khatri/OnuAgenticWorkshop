@@ -28,11 +28,11 @@ Use this reference to choose the smallest effective frontend workflow. It define
 
 ## Loop Guards
 
-- A workstream has one primary owner: `$onu-frontend-development`, `$onu-frontend-production-ui`, or `frontend-implementer`; never more than one concurrently.
+- A workstream has one primary owner: `$onu-frontend-development`, `$onu-frontend-production-ui`, or `onu-frontend-implementer`; never more than one concurrently.
 - `$onu-frontend-guidelines`, `$onu-frontend-react-patterns`, and the specialists are consulted references or bounded review passes, not separate delivery coordinators.
 - A specialist does not invoke another frontend skill or agent. It returns a concrete handoff, finding, or constraint to the primary owner.
 - `$onu-research-deep` may use `$onu-workflow-user-interview` only to frame an otherwise unanswerable decision; `$onu-workflow-user-interview` never starts research or implementation. After either completes, control returns to the calling workflow.
 - The primary owner may request at most the specialists whose triggers are present. It does not re-enter design after an approved handoff unless the requirement materially changes.
-- `frontend-implementer` does not delegate or create subagents. A parent coordinator owns cross-layer contracts, synthesis, and any parallelization.
-- `frontend-implementer` does not interview the user or open a broad research workstream. It reports the exact unresolved decision and evidence gap to its parent, which selects the gate.
-- For a frontend/backend shared contract, use `$onu-delivery-full-stack-feature` or `story-orchestrator`; do not split the contract across frontend specialists.
+- `onu-frontend-implementer` does not delegate or create subagents. A parent coordinator owns cross-layer contracts, synthesis, and any parallelization.
+- `onu-frontend-implementer` does not interview the user or open a broad research workstream. It reports the exact unresolved decision and evidence gap to its parent, which selects the gate.
+- For a frontend/backend shared contract, use `$onu-delivery-full-stack-feature` or `onu-story-orchestrator`; do not split the contract across frontend specialists.

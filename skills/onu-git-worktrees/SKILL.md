@@ -9,7 +9,7 @@ Use this skill to create reproducible isolated workspaces without stashing or sw
 
 ## Use this skill when
 
-- implementing multiple handed-off GitHub issues in parallel (see `onu-openspec-workflow`, `onu-delivery-issues-kickoff`, and `story-orchestrator`)
+- implementing multiple handed-off GitHub issues in parallel (see `onu-openspec-workflow`, `onu-delivery-issues-kickoff`, and `onu-story-orchestrator`)
 - a feature needs a clean checkout separate from your current working tree
 - you want to keep an in-progress change while starting unrelated work
 

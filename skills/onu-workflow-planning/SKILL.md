@@ -91,5 +91,5 @@ Plan review and approval
 These gates review plans created by this skill. They do not replace domain
 implementation, OpenSpec proposal or implementation-plan, code-review,
 verification, or delivery gates. Do not apply this skill as a substitute for
-the separate OpenSpec implementation-planner approval contract.
+the separate OpenSpec onu-implementation-planner approval contract.
 

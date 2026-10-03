@@ -57,11 +57,11 @@ Build a dependency graph from each story's `Depends on` field (legacy `Dependenc
 
 ### 3. Classify delivery shape
 
-- **backend** — Minimal APIs, contracts, handlers, EF, migrations (agent: `backend-implementer`).
-- **frontend** — React feature UIs, forms, hooks, API integration (agent: `frontend-implementer`).
-- **full-stack** — coordinated frontend + backend with a shared contract (agent: `story-orchestrator` owning the contract lane).
+- **backend** — Minimal APIs, contracts, handlers, EF, migrations (agent: `onu-backend-implementer`).
+- **frontend** — React feature UIs, forms, hooks, API integration (agent: `onu-frontend-implementer`).
+- **full-stack** — coordinated frontend + backend with a shared contract (agent: `onu-story-orchestrator` owning the contract lane).
 - **architecture** — boundaries, ADRs, composition changes (`is_architectural: true`).
-- **research** — evidence gathering / knowledge building (agent: `knowledge-researcher`).
+- **research** — evidence gathering / knowledge building (agent: `onu-knowledge-researcher`).
 
 ### 4. Analyze conflict risk
 

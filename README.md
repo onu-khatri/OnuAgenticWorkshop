@@ -1,6 +1,6 @@
 # OnuAgenticWorkshop
 
-A reusable Agent Skills repository plus a lightweight `npx` installer for **Codex**, **GitHub Copilot**, and **OpenCode**.
+A reusable Agent Skills repository plus a lightweight `npx` installer for **Claude Code**, **Codex**, **GitHub Copilot**, and **OpenCode**.
 
 The important design rule is that the npm package is **not the skills payload**. When the CLI runs, it reads `installer.config.json`, fetches the configured Git repository/ref, discovers its `skills/` directory, and installs those skills into the selected client scope.
 
@@ -12,8 +12,8 @@ npx installer
      ├─ reads installer.config.json
      │     repository + ref + skillsPath
      │
-     ├─ asks target clients (multi-select)
-     │     Codex / GitHub Copilot / OpenCode
+      ├─ asks target clients (multi-select)
+      │     Claude Code / Codex / GitHub Copilot / OpenCode
      │
      ├─ asks install scope
      │     Current project / User root
@@ -82,9 +82,10 @@ The installer first asks which clients should receive the skills:
 
 ```text
 Select target client providers:
-› ◯ Codex
-  ◯ GitHub Copilot
-  ◯ OpenCode
+› ☐ Claude Code
+  ☐ Codex
+  ☐ GitHub Copilot
+  ☐ OpenCode
 
   ↑/↓ move • Space toggle • Enter confirm
 ```
@@ -97,6 +98,12 @@ Where should the skills be installed?
   User root / global (/home/you)
 ```
 
+Then it asks whether to also install agents (skills are always installed; agents are opt-in):
+
+```text
+Also install agents? [y/N]
+```
+
 It fetches the configured source repository **after these choices**, resolves the Git commit, previews target locations, and asks before replacing existing skills.
 
 ## Install locations
@@ -105,6 +112,7 @@ For a single selected provider, the installer uses that provider's supported dis
 
 | Provider | Current project | User/global |
 | --- | --- | --- |
+| Claude Code | `.claude/skills/` | `~/.claude/skills/` |
 | Codex | `.agents/skills/` | `~/.agents/skills/` |
 | GitHub Copilot | `.github/skills/` | `${COPILOT_HOME:-~/.copilot}/skills/` |
 | OpenCode | `.opencode/skills/` | `${XDG_CONFIG_HOME:-~/.config}/opencode/skills/` |
@@ -116,9 +124,22 @@ Project: .agents/skills/
 User:    ~/.agents/skills/
 ```
 
-Codex, GitHub Copilot, and OpenCode all recognize `.agents/skills`, so one copy is enough for a multi-client setup. Set `preferSharedPathForMultipleClients` to `false` in `installer.config.json` if you intentionally want duplicated provider-native installs.
+Codex, GitHub Copilot, and OpenCode all recognize `.agents/skills`, so one copy is enough for a multi-client setup. Claude Code uses `.claude/skills/` natively and does not fall back to `.agents/skills`. Set `preferSharedPathForMultipleClients` to `false` in `installer.config.json` if you intentionally want duplicated provider-native installs.
 
 > Note: Codex's current documented local skill location is `.agents/skills`. Therefore a Codex-local skill may also be discoverable by other clients that intentionally support the shared Agent Skills location.
+
+## Agent install locations
+
+The installer also discovers agents from the source repository's `agentsPath` (default `agents/`) and generates each agent in the selected vendor's native format. The canonical source for each agent is a `AGENT.md` file, which the installer transforms per vendor using `agent-formats.json`.
+
+| Provider | Current project | User/global | Native file |
+| --- | --- | --- | --- |
+| Claude Code | `.claude/agents/` | `~/.claude/agents/` | `<name>.md` |
+| Codex | `.codex/agents/` | `~/.codex/agents/` | `<name>.toml` |
+| GitHub Copilot | `.github/agents/` | `~/.github/agents/` | `<name>.agent.md` |
+| OpenCode | `.opencode/agent/` | `~/.config/opencode/agent/` | `<name>.md` |
+
+Because each vendor's native agent format differs (TOML for Codex, YAML frontmatter + Markdown for Claude Code, Copilot, and OpenCode), agents are always installed to each selected vendor's native location — there is no shared multi-vendor fallback for agents. Field mapping between the canonical frontmatter and each vendor's required parameters is declared in `agent-formats.json`.
 
 ## Source provenance
 
@@ -141,12 +162,22 @@ This makes a moving ref such as `main` auditable and a pinned tag/SHA reproducib
 
 ## Non-interactive use
 
-Install all three clients at project scope:
+Install all four clients at project scope:
 
 ```bash
 npx <your-installer-package> \
-  --clients codex,github,opencode \
+  --clients claude,codex,github,opencode \
   --scope project \
+  --force
+```
+
+Add `--agents` to also install agents in non-interactive mode (they are skipped by default unless `--agents` is passed):
+
+```bash
+npx <your-installer-package> \
+  --clients claude,codex,github,opencode \
+  --scope project \
+  --agents \
   --force
 ```
 
@@ -156,7 +187,7 @@ Install at user scope from a specific release:
 npx <your-installer-package> \
   --repo https://github.com/acme/agent-skills.git \
   --ref v1.4.0 \
-  --clients codex,github,opencode \
+  --clients claude,codex,github,opencode \
   --scope user \
   --force
 ```
@@ -165,7 +196,7 @@ Preview without writing:
 
 ```bash
 npx <your-installer-package> \
-  --clients codex,github,opencode \
+  --clients claude,codex,github,opencode \
   --scope project \
   --dry-run
 ```
@@ -176,8 +207,12 @@ Options:
 --repo <git-url>      Skills Git repository URL/path
 --ref <git-ref>       Branch, tag, or commit
 --skills-path <path>  Skills directory inside source repository
---clients <list>      codex,github,opencode
+--agents-path <path>  Agents directory inside source repository
+--clients <list>      claude,codex,github,opencode
 --scope <scope>       project | user
+--agents              Also install agents (default: ask interactively)
+--no-agents           Skip agent installation
+--model <id>          Model to set on generated agents (leave blank to omit)
 --force               Replace existing skills without prompting
 --dry-run             Fetch and preview without writing skill files
 -h, --help            Show help
@@ -194,9 +229,13 @@ onu-agentic-workshop/
 │       ├── SKILL.md
 │       └── scripts/
 │           └── Find-AgentSkill.ps1
+├── agents/
+│   └── onu-code-reviewer/
+│       └── AGENT.md
 ├── bin/
 │   └── install.js
 ├── installer.config.json
+├── agent-formats.json
 ├── docs/
 │   └── shared-skill-practices.md
 └── package.json
@@ -214,6 +253,22 @@ description: Describe what the skill does and when it should be used.
 
 Describe the workflow here.
 ```
+
+A minimal portable agent:
+
+```markdown
+---
+name: my-agent
+description: Describe what the agent does and when to delegate to it.
+mode: subagent
+---
+
+Instructions that define the agent's behavior.
+```
+
+The `model` field is intentionally not set in the repository's agents. Models are supplied by the user (via the `--model` flag, the interactive prompt, or by adding a `model` field to their own `AGENT.md`). When no model is provided, the generated agent files omit it so each vendor falls back to its own default or inherited model.
+
+See [`agent-formats.json`](agent-formats.json) for the full canonical frontmatter schema and the per-vendor field mapping.
 
 See [`docs/shared-skill-practices.md`](docs/shared-skill-practices.md) for the cross-client conventions and security/versioning practices used by this repository.
 
@@ -259,7 +314,7 @@ Validate source files and syntax:
 npm run validate
 ```
 
-Run an isolated local installer test. It creates a temporary project, installs all three clients from the working tree, verifies the skill and provenance lock, then deletes the temporary project:
+Run an isolated local installer test. It creates a temporary project, installs all four clients from the working tree, verifies the skill and provenance lock, then deletes the temporary project:
 
 ```bash
 npm run test:local
@@ -325,7 +380,7 @@ You can also invoke development mode directly:
 ```bash
 node bin/install.js \
   --local-source . \
-  --clients codex,github,opencode \
+  --clients claude,codex,github,opencode \
   --scope project \
   --dry-run
 ```

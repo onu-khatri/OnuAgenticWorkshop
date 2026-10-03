@@ -13,7 +13,12 @@ const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 const npx = process.platform === 'win32' ? 'npx.cmd' : 'npx';
 
 function run(command, args, cwd = repoRoot) {
-  const result = spawnSync(command, args, { cwd, encoding: 'utf8', stdio: 'inherit' });
+  const result = spawnSync(command, args, {
+    cwd,
+    encoding: 'utf8',
+    stdio: 'inherit',
+    shell: process.platform === 'win32',
+  });
   if (result.error) throw result.error;
   if (result.status !== 0) process.exit(result.status ?? 1);
 }
@@ -29,13 +34,20 @@ try {
     `--package=${tarball}`,
     'onu-agentic-workshop',
     '--local-source', repoRoot,
-    '--clients', 'codex,github,opencode',
+    '--clients', 'claude,codex,github,opencode',
     '--scope', 'project',
+    '--agents',
     '--force',
   ], projectDir);
 
   const skill = path.join(projectDir, '.agents', 'skills', 'onu-skill-discovery', 'SKILL.md');
   if (!fs.existsSync(skill)) throw new Error(`Packed installer did not install expected skill: ${skill}`);
+
+  const claudeAgent = path.join(projectDir, '.claude', 'agents', 'onu-code-reviewer.md');
+  if (!fs.existsSync(claudeAgent)) throw new Error(`Packed installer did not install expected agent: ${claudeAgent}`);
+
+  const codexAgent = path.join(projectDir, '.codex', 'agents', 'onu-code-reviewer.toml');
+  if (!fs.existsSync(codexAgent)) throw new Error(`Packed installer did not install expected agent: ${codexAgent}`);
 
   console.log('Packed npx installer test passed.');
 } finally {

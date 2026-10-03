@@ -88,12 +88,12 @@ copied into or patched into generated files.
 
 Before selecting implementation work, enforce the repository implementation-
 agent gate: run `$onu-workflow-development-entry`, route the exact OpenSpec task
-or coherent batch to `implementation-planner`, obtain a matching
+or coherent batch to `onu-implementation-planner`, obtain a matching
 `status: Approved` plan with approval metadata, and then route the work to one
 primary implementation owner. The parent coordinator must not edit production
 code, tests, migrations, or configuration directly. Use
-`backend-implementer` for backend work and `frontend-implementer` for frontend
-work; use `security-auditor` and `code-reviewer` as read-only specialist
+`onu-backend-implementer` for backend work and `onu-frontend-implementer` for frontend
+work; use `onu-security-auditor` and `onu-code-reviewer` as read-only specialist
 lanes. If the plan is missing, Proposed, stale, or mismatched, stop before
 invoking `openspec-apply-change` for implementation.
 

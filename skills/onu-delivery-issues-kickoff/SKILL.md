@@ -140,11 +140,11 @@ Do not continue when OpenSpecWorkflow reports `BLOCKED`; report the exact missin
 
 ### 8. Classify implementation ownership for the OpenSpecWorkflow handoff
 
-- **backend** — Minimal APIs, contracts, handlers, EF, migrations: `backend-implementer`.
-- **frontend** — React feature UI, forms, hooks, and API integration: `frontend-implementer`.
-- **full-stack** — coordinated frontend/backend with a shared contract: `story-orchestrator` owns the contract lane.
-- **architecture** — boundaries, ADRs, composition: `story-orchestrator` with `onu-architecture-review`.
-- **research** — evidence or knowledge work: `knowledge-researcher`.
+- **backend** — Minimal APIs, contracts, handlers, EF, migrations: `onu-backend-implementer`.
+- **frontend** — React feature UI, forms, hooks, and API integration: `onu-frontend-implementer`.
+- **full-stack** — coordinated frontend/backend with a shared contract: `onu-story-orchestrator` owns the contract lane.
+- **architecture** — boundaries, ADRs, composition: `onu-story-orchestrator` with `onu-architecture-review`.
+- **research** — evidence or knowledge work: `onu-knowledge-researcher`.
 
 Select one primary implementation owner per issue and pass that ownership to `$onu-openspec-workflow`. `onu-delivery-issues-kickoff` does not invoke the owner or any implementation agent. Load specialist skills only when their trigger applies; they return constraints or findings to the OpenSpec-coordinated owner and do not duplicate implementation.
 
