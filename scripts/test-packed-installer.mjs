@@ -34,7 +34,7 @@ try {
     '--force',
   ], projectDir);
 
-  const skill = path.join(projectDir, '.agents', 'skills', 'engineering-baseline', 'SKILL.md');
+  const skill = path.join(projectDir, '.agents', 'skills', 'onu-skill-discovery', 'SKILL.md');
   if (!fs.existsSync(skill)) throw new Error(`Packed installer did not install expected skill: ${skill}`);
 
   console.log('Packed npx installer test passed.');

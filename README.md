@@ -190,10 +190,10 @@ Keep one portable copy of every skill under `skills/`:
 ```text
 onu-agentic-workshop/
 ├── skills/
-│   └── engineering-baseline/
+│   └── onu-skill-discovery/
 │       ├── SKILL.md
-│       └── references/
-│           └── completion-checklist.md
+│       └── scripts/
+│           └── Find-AgentSkill.ps1
 ├── bin/
 │   └── install.js
 ├── installer.config.json

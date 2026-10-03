@@ -22,7 +22,7 @@ try {
   if (result.error) throw result.error;
   if (result.status !== 0) process.exit(result.status ?? 1);
 
-  const skill = path.join(projectDir, '.agents', 'skills', 'engineering-baseline', 'SKILL.md');
+  const skill = path.join(projectDir, '.agents', 'skills', 'onu-skill-discovery', 'SKILL.md');
   const lock = path.join(projectDir, '.agents', 'skills', '.onu-agentic-workshop.lock.json');
   if (!fs.existsSync(skill)) throw new Error(`Expected installed skill was not created: ${skill}`);
   if (!fs.existsSync(lock)) throw new Error(`Expected provenance lock was not created: ${lock}`);
