@@ -1,6 +1,6 @@
 ---
 name: onu-product-prd
-description: Create or update the target project PRDs in the root `prd/` folder from `Business-Requirements/*.BR.md`, `User-Stories/*.US.md`, and their linked supporting files. Use when the task is product-requirement authoring or maintenance, not implementation or story creation.
+description: Create or update the PRDs in the target project in the root `prd/` folder from `Business-Requirements/*.BR.md`, `User-Stories/*.US.md`, and their linked supporting files. Use when the task is product-requirement authoring or maintenance, not implementation or story creation.
 ---
 
 # PRD Manager

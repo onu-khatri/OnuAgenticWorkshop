@@ -1,7 +1,6 @@
 # Agent Instructions
 
-These instructions apply to the repository unless a more specific nested
-`AGENTS.md` overrides them.
+These instructions apply to the repository unless a more specific nested `AGENTS.md` overrides them.
 
 ## Purpose and authority
 
@@ -127,6 +126,11 @@ Before parallelizing, identify shared contracts, migrations, composition,
 shared UI primitives, generated artifacts, dependencies, and ownership. Keep
 each write set disjoint and one coordinating lane for shared boundaries. Use
 agents only when delegation materially improves the task.
+
+Always give every agent and subagent a recognizable name so the user can easily
+tell who is doing what. Pick the name using `$onu-agent-name-picker`
+(propose → reserve → release); reserve a name when an agent starts and release
+it when the agent is done.
 
 The parent/sub-agent lifecycle, event schema, parent acknowledgement, checkpoint
 and lost-agent fallback, and tracing capability rules are canonical here:

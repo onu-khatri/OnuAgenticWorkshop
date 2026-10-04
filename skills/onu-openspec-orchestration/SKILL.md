@@ -1,12 +1,6 @@
 ---
 name: onu-openspec-orchestration
-description: >-
-  Orchestrates OpenSpec spec-driven development with GitHub. Use when a GitHub
-  issue, repository task, pull request, review thread, or requested code change
-  should be driven through the appropriate OpenSpec skills automatically from
-  discovery and proposal through implementation, verification, spec sync,
-  archiving, and pull-request handling. Resumes safely from existing OpenSpec,
-  branch, issue, PR, and CI state instead of duplicating work.
+description: 'Orchestrates OpenSpec spec-driven development with GitHub. Use when a GitHub issue, repository task, pull request, review thread, or requested code change should be driven through the appropriate OpenSpec skills automatically from discovery and proposal through implementation, verification, spec sync, archiving, and pull-request handling. Resumes safely from existing OpenSpec, branch, issue, PR, and CI state instead of duplicating work.'
 ---
 
 # OpenSpec GitHub Orchestrator

@@ -37,6 +37,14 @@ For multi-skill work, follow [frontend workflow routing](../onu-frontend-guideli
 - third-party script or widget risk
 - privacy and consent-aware telemetry
 
+## Hardening checklist
+
+- Prefer HttpOnly, Secure, SameSite cookies for auth tokens over `localStorage`/`sessionStorage`; never persist secrets in client storage.
+- Enforce a Content Security Policy (CSP) and Subresource Integrity (SRI) for third-party scripts where the deployment supports it.
+- Validate and allowlist redirect targets; never redirect to a user-controlled URL without normalization.
+- Escape or sanitize untrusted content before rendering; prefer framework-safe DOM APIs over `dangerouslySetInnerHTML`.
+- Scope error/log/analytics payloads to avoid leaking PII, tokens, or internal identifiers.
+
 ## Target project focus
 
 - user content rendered back to the user

@@ -1,6 +1,6 @@
 ---
 name: onu-workflow-development-entry
-description: Gate any the target project development-related work before code changes by reconstructing current state, classifying the delivery shape, and routing the minimum backend, frontend, architecture, security, research, and verification skills. Do not use it for documentation-only work.
+description: Gate any development-related work in the target project before code changes by reconstructing current state, classifying the delivery shape, and routing the minimum backend, frontend, architecture, security, research, and verification skills. Do not use it for documentation-only work.
 license: MIT
 ---
 
@@ -56,16 +56,16 @@ Return a concrete ordered skill route. The first item is the primary workflow; l
 For backend shape, route `$onu-backend-dotnet-patterns` and `$onu-backend-feature-development`. Also route:
 
 - `$onu-backend-ef-core` when queries, entities, repositories, schema, migrations, seed data, initialization, or transactions change;
-- `$onu-backend-security` or `$onu-security-management` when authentication, authorization, ownership, file handling, exports, privacy, quotas, entitlements, sensitive data, or another trust boundary changes;
+- `$onu-backend-security` when a backend trust boundary changes, or `$onu-security-management` when the change crosses layers (frontend + backend + auth) or needs cross-cutting secure design;
 - `$onu-architecture-review` or `$onu-backend-dotnet-architecture` when module boundaries, composition, dependencies, integration, or quality attributes are materially affected;
 - `$onu-architecture-domain-modeling` when business language, invariants, aggregate ownership, or bounded contexts are unclear; and
 - `$onu-quality-performance` only for a measured or concrete query, throughput, rendering, bundle, network, or responsiveness problem.
 
 ### Frontend
 
-For frontend shape, route `$onu-frontend-development` and `$onu-frontend-guidelines`. Follow [frontend workflow routing](../onu-frontend-guidelines/references/frontend-workflow-routing.md). Select `$onu-frontend-design` for missing or deliberately changing visual/interaction direction, `$onu-frontend-production-ui` only for an explicitly UI-dominant implementation, `$onu-frontend-react-patterns` for a concrete unresolved React/TypeScript pattern, `$onu-frontend-security` for auth, redirects, untrusted content, sensitive data, or browser trust boundaries, `$onu-quality-performance` for a measured performance problem, and `$onu-frontend-design-review` for an explicit visual critique or pre-ship review.
+For frontend shape, route `$onu-frontend-development` and `$onu-frontend-guidelines`. Follow [frontend workflow routing](../onu-frontend-guidelines/references/frontend-workflow-routing.md). Select `$onu-frontend-design` for missing/deliberately changing visual direction or an explicit critique, `$onu-frontend-security` for auth, redirects, untrusted content, sensitive data, or browser trust boundaries, `$onu-quality-performance` for a measured performance problem, and `$onu-quality-code-review` (routing to `$onu-quality-code-review-fe`) for a production code review.
 
-There is one frontend implementation owner. Do not route both `$onu-frontend-development` and `$onu-frontend-production-ui` as concurrent primary owners. Specialists return constraints or findings to the owner.
+There is one frontend implementation owner: `$onu-frontend-development`. Specialists return constraints or findings to the owner.
 
 ### Full-stack and architecture
 

@@ -28,6 +28,7 @@ Select capability skills by matching each one's `## Review Capability Contract` 
 Current capabilities:
 
 - `$onu-quality-code-review-be` — .NET backend methodology (primary for backend changes).
+- `$onu-quality-code-review-fe` — React/TypeScript frontend methodology (primary for frontend changes).
 
 ## Session & review-target intake
 

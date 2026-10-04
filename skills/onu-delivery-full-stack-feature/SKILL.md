@@ -34,11 +34,11 @@ Use this skill when a feature spans multiple layers and success depends on coord
 - test coverage at the right boundaries
 - reviewer clarity and PR packaging
 
-## Target project focus
+## Cross-layer focus
 
-- frontend feature changes coordinated with Web and SL contracts
-- persistence changes flagged early
-- branch and worktree safety during multi-story delivery
+- frontend feature changes coordinated with the backend API contracts
+- persistence and migration changes flagged early
+- branch and worktree safety during multi-change delivery
 
 ## Output requirements
 
@@ -49,7 +49,7 @@ Use this skill when a feature spans multiple layers and success depends on coord
 
 ## Definition of Done
 
-- Backend builds and tests pass: `dotnet build application\<TargetProject>App.slnx` and the relevant test project from `test/`.
-- Frontend checks pass: `npm run check` and `npm run build` in the client.
+- Backend builds and tests pass, using the project's build/test commands from `AGENTS.md` or the knowledge base.
+- Frontend checks and build pass, using the project's check/build commands from `AGENTS.md` or the knowledge base.
 - Cross-layer contracts are consistent and any migration impact is documented.
 - The change is packaged for review with story traceability and verification notes.

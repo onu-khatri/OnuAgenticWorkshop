@@ -1,6 +1,6 @@
 ---
 name: onu-frontend-guidelines
-description: Build and review the target project React frontend code with current architecture, typed data flows, accessible UI states, and proportionate performance practices. Use for feature, component, form, route, or client-data changes.
+description: Build and review the React frontend code in the target project with current architecture, typed data flows, accessible UI states, and proportionate performance practices. Use for feature, component, form, route, or client-data changes.
 ---
 
 # Frontend Development Guidelines
@@ -19,7 +19,8 @@ Read [frontend workflow routing](references/frontend-workflow-routing.md) when s
 
 - the task is backend-only
 - you only need visual direction without implementation standards; use `$onu-frontend-design`
-- you need a defect-first visual critique; use `$onu-frontend-design-review`
+- you need a defect-first visual critique; use `$onu-frontend-design` (review mode)
+- you need a production-readiness code review; use `$onu-quality-code-review` (which composes `$onu-quality-code-review-fe`)
 
 ## Knowledge and project discovery
 
@@ -44,6 +45,7 @@ Read [frontend workflow routing](references/frontend-workflow-routing.md) when s
 - [client-architecture.md](references/client-architecture.md): feature, shared, route, component, hook, and controller ownership.
 - [data-and-state.md](references/data-and-state.md): React Query, services, forms, client state, and all user-visible async states.
 - [routing-and-styling.md](references/routing-and-styling.md): React Router composition, route guards, Tailwind, shared UI, and theme tokens.
+- [react-patterns.md](references/react-patterns.md): concrete component, data-fetching, form, routing, error-boundary, and performance patterns.
 - [accessibility-and-responsive.md](references/accessibility-and-responsive.md): keyboard, semantic, responsive, and motion requirements.
 - [typescript-and-performance.md](references/typescript-and-performance.md): strict typing, mapping, rendering, loading, and bundle guidance.
 - [testing-guide.md](references/testing-guide.md): Vitest and Testing Library coverage.

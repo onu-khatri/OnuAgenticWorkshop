@@ -1,6 +1,6 @@
 ---
 name: onu-frontend-development
-description: Deliver production-ready the target project React features with correct routes, typed client data, accessible responsive behavior, and focused verification. Use when building or changing product UI, hooks, forms, or client integration.
+description: Deliver production-ready React features in the target project with correct routes, typed client data, accessible responsive behavior, and focused verification. Use when building or changing product UI, hooks, forms, or client integration.
 ---
 
 # Frontend Developer
@@ -19,8 +19,9 @@ For multi-skill work, follow [frontend workflow routing](../onu-frontend-guideli
 
 - the work is purely backend or persistence design
 - the task is design-only without implementation
-- the task is a visual critique; use `$onu-frontend-design-review`
+- the task is a visual critique; use `$onu-frontend-design` (review mode)
 - the task needs visual direction before code; use `$onu-frontend-design`
+- the task is a production-readiness code review; use `$onu-quality-code-review` (it routes to `$onu-quality-code-review-fe` for frontend)
 
 ## Discovery
 
@@ -46,6 +47,16 @@ For multi-skill work, follow [frontend workflow routing](../onu-frontend-guideli
 - Use concurrent React APIs, memoization, lazy loading, virtualization, or optimistic updates only when the interaction or measured cost justifies them.
 - Escalate auth, authorization, redirect, sensitive-data, or untrusted-content concerns to `$onu-frontend-security`.
 
+## UI-dominant mode
+
+For an explicitly UI/visual-dominant request (layout, hierarchy, polish, theming) where behavior wiring is secondary, apply these additional lenses while still following the workflow above:
+
+- Define user goals and critical states before drawing the default layout; hierarchy, spacing, and rhythm are structure, not decoration.
+- Choose one clear theme direction and interaction language; reuse shared UI, hooks, and typed models.
+- Prefer themed surfaces with strong contrast and purposeful motion over decoration; respect `prefers-reduced-motion`.
+- Design mobile and desktop behavior together, plus empty, loading, error, success, and entitlement states.
+- Hand off implementation notes that fit the existing client architecture rather than a separate design system.
+
 ## Target project focus
 
 - route composition through the application router and guards through the route-guard module
@@ -64,5 +75,8 @@ For multi-skill work, follow [frontend workflow routing](../onu-frontend-guideli
 
 - Feature boundaries, typed contracts, and shared API behavior are preserved.
 - User-visible states and accessible responsive behavior are covered.
+- A route-level error boundary catches render/effect failures; failed queries/mutations expose a retry path.
+- No sensitive data is logged to client telemetry.
+- Interaction-heavy changes are checked for responsiveness (INP) and layout stability (CLS) regressions.
 - Focused tests cover changed behavior or their omission is explicit.
 - Run `npm run check`, `npm run test`, and `npm run build` in the client project directory when proportionate to the change; report exactly what ran.

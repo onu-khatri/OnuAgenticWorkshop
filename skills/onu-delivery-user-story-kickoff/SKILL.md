@@ -1,6 +1,6 @@
 ---
 name: onu-delivery-user-story-kickoff
-description: Prepare approved the target project user stories for GitHub issue handoff. Assess readiness, resolve dependencies, classify delivery shape, and invoke delivery-github-issue; use delivery-issues-kickoff for implementation execution.
+description: Prepare approved user stories in the target project for GitHub issue handoff. Assess readiness, resolve dependencies, classify delivery shape, and invoke delivery-github-issue; use delivery-issues-kickoff for implementation execution.
 ---
 
 # US Kickoff

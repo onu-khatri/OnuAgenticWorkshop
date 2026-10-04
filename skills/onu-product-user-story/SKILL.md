@@ -1,6 +1,6 @@
 ---
 name: onu-product-user-story
-description: Create or revise evidence-grounded, implementation-ready the target project user-story packs from business requirements, product decisions, research, and repository context. Use for feature, defect, technical-debt, or research stories in User-Stories/*.US.md, *.SI.md, and *.Research.md; use delivery-user-story-kickoff for approved GitHub handoff and delivery-issues-kickoff for implementation.
+description: Create or revise evidence-grounded, implementation-ready user-story packs in the target project from business requirements, product decisions, research, and repository context. Use for feature, defect, technical-debt, or research stories in User-Stories/*.US.md, *.SI.md, and *.Research.md; use delivery-user-story-kickoff for approved GitHub handoff and delivery-issues-kickoff for implementation.
 ---
 
 # User Story Creator

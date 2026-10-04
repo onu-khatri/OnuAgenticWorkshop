@@ -4,6 +4,18 @@ Patterns for optimizing React component performance, preventing unnecessary re-r
 
 ---
 
+## Core Web Vitals
+
+Measure and optimize the user-facing metrics first, before micro-optimizing React:
+
+- **LCP (Largest Contentful Paint)** — loading. Good ≤ 2.5s. Improve with code splitting, image optimization, and critical-path prioritization.
+- **INP (Interaction to Next Paint)** — responsiveness across the whole page lifecycle (replaced FID). Good ≤ 200ms, poor > 500ms. Improve by keeping event handlers light, breaking long tasks, avoiding layout thrash, and deferring heavy work.
+- **CLS (Cumulative Layout Shift)** — visual stability. Good ≤ 0.1. Reserve space for images/ads/embeds, use width/height attributes, and avoid inserting content above existing content.
+
+Measure with the [`web-vitals`](https://github.com/GoogleChrome/web-vitals) library (`onLCP`, `onINP`, `onCLS`). Prefer **field data** (Real User Monitoring / CrUX) over lab data — lab only simulates load, not real interactions. Profile with the React DevTools Profiler before adding memoization; `useMemo`/`useCallback`/`React.memo` are not defaults.
+
+---
+
 ## Memoization Patterns
 
 ### useMemo for Expensive Computations

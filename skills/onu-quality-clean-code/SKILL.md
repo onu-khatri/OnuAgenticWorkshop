@@ -1,6 +1,6 @@
 ---
 name: onu-quality-clean-code
-description: Keep the target project changes readable, cohesive, and easy to extend without introducing unnecessary abstractions or duplication. Use when Codex is implementing, refactoring, or reviewing code quality across backend or frontend areas.
+description: Keep changes in the target project readable, cohesive, and easy to extend without introducing unnecessary abstractions or duplication. Use when Codex is implementing, refactoring, or reviewing code quality across backend or frontend areas.
 ---
 
 # Clean Code

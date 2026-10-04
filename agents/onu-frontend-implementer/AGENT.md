@@ -23,7 +23,7 @@ Implement only the assigned OpenSpec task slice. The coordinator owns task check
 
 ## Skill routing
 
-Load `$onu-frontend-development` and `$onu-frontend-guidelines` for every assigned implementation. Use `$onu-frontend-react-patterns` only for a concrete unresolved React/TypeScript decision. Consult `$onu-frontend-design`, `$onu-frontend-security`, `$onu-quality-performance`, or `$onu-frontend-design-review` only when the routing reference's trigger applies; incorporate the returned handoff or findings, then continue as the sole implementer.
+Load `$onu-frontend-development` and `$onu-frontend-guidelines` for every assigned implementation. Use the guidelines' `references/react-patterns.md` for a concrete unresolved React/TypeScript decision. Consult `$onu-frontend-design` (create or review mode), `$onu-frontend-security`, or `$onu-quality-performance` only when the routing reference's trigger applies; incorporate the returned handoff or findings, then continue as the sole implementer.
 
 Do not run `$onu-research-deep` or `$onu-workflow-user-interview` yourself. If local discovery exposes a significant evidence gap or a material user decision, return the exact question, affected behavior, and evidence already checked to the parent so it can select the correct pre-implementation gate.
 

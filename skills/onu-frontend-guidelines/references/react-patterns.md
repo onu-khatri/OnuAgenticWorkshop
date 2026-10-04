@@ -1,13 +1,6 @@
----
-name: onu-frontend-react-patterns
-description: "Apply production-grade React and TypeScript patterns for the target project: component structure, state management, data fetching, forms, routing, and performance. Use when implementing or reviewing frontend code in the React/Vite client."
----
+# React/TypeScript Patterns
 
-# React Patterns
-
-Use this skill to write React/TypeScript code that fits the target project client stack and stays easy to change. It complements `onu-frontend-guidelines` and `onu-frontend-development`.
-
-For multi-skill work, follow [frontend workflow routing](../onu-frontend-guidelines/references/frontend-workflow-routing.md). Use this only to resolve a concrete React or TypeScript pattern decision; it is not a delivery coordinator and does not delegate work.
+Concrete, production-grade patterns for the React/Vite client. Use these to resolve a specific component, state, data-fetching, form, routing, or performance decision. They are the implementation-level companion to the higher-level standards in the parent `SKILL.md`.
 
 ## Stack
 
@@ -57,6 +50,8 @@ export function PostDetail({ postId }: { postId: number }) {
 - Mutations use `useMutation` with `onSuccess` invalidation rather than manual refetch.
 - API functions stay in `src/features/<feature>/api/` and return typed promises.
 - Avoid fetching the same data in multiple components; lift the query key to the nearest common ancestor.
+- Set sensible `staleTime`/`gcTime` and use `placeholderData`/`initialData` for smooth pagination and detail navigation.
+- Surface retry and refetch affordances in the error state; never hide a mutation failure behind an indefinite spinner.
 
 ## Form patterns (React Hook Form + Zod)
 
@@ -88,20 +83,29 @@ function PostForm({ defaultValues, onSubmit }: Props) {
 }
 ```
 
-- Zod schemas mirror the backend AM request contracts for consistency.
+- Zod schemas mirror the backend request contracts for consistency.
 - Place shared field validation rules in a shared schema module.
+- Announce server-side errors with a visible, focusable message, not only inline styling.
 
 ## Routing (React Router)
 
 - Define routes in the application router under the existing route hierarchy.
 - Use `useParams` for route params, `useSearchParams` for filter/sort state in list views.
+- Keep route guards and loaders co-located with the route they protect.
 
 ## Performance
 
 - Use TanStack Query's built-in caching and background refetching; avoid manual `useEffect` fetching.
 - Lazy-load route components with `React.lazy` and `Suspense` boundaries.
 - Defer heavy third-party imports until they are needed.
-- Profile with the React DevTools Profiler before memoizing.
+- Profile with the React DevTools Profiler before memoizing; `useMemo`/`useCallback`/`React.memo` are not defaults.
+- Guard against poor Interaction to Next Paint (INP): keep event handlers light, break long tasks, and avoid layout thrash in interactions.
+
+## Error handling
+
+- Add a React Error Boundary at the route level to contain render/effect crashes.
+- Provide a retry path for failed queries and mutations; never leave a surface silently stuck.
+- Log uncaught client errors to the configured telemetry; do not leak sensitive data into logs.
 
 ## Implementation checklist
 
@@ -109,4 +113,5 @@ function PostForm({ defaultValues, onSubmit }: Props) {
 - [ ] Forms use RHF + Zod with schemas aligned to backend models.
 - [ ] Server state is in TanStack Query; client-only state is in local state or Zustand.
 - [ ] No raw `fetch` calls outside `src/features/<feature>/api/`.
+- [ ] A route-level error boundary catches render/effect failures.
 - [ ] `npm run check` and `npm run build` pass before the change is complete.
