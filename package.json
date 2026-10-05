@@ -22,8 +22,9 @@
     "dev:install": "node bin/install.js --local-source .",
     "bundle": "node scripts/build-tar.mjs",
     "test:local": "node scripts/test-local-installer.mjs",
+    "test:stale": "node scripts/test-stale-cleanup.mjs",
     "test:bundle": "node scripts/test-packed-installer.mjs",
-    "test": "npm run validate && npm run test:local && npm run test:bundle",
+    "test": "npm run validate && npm run test:local && npm run test:stale && npm run test:bundle",
     "ci:validate": "npm test",
     "ci:bundle": "npm test && npm run bundle"
   },

@@ -16,9 +16,25 @@ export function printPlan(plan, agentPlan, scope, source, commit) {
   console.log('');
 }
 
+const LOCK_FILENAME = '.onu-agentic-workshop.lock.json';
+
 function buildProvenance(plan, agentPlan, source, commit) {
+  const files = {};
+  for (const item of plan) {
+    files[item.root] ??= { skills: [], agents: [] };
+    files[item.root].skills.push(item.skill);
+  }
+  for (const item of agentPlan) {
+    files[item.root] ??= { skills: [], agents: [] };
+    files[item.root].agents.push(item.filename);
+  }
+  for (const entry of Object.values(files)) {
+    entry.skills = [...new Set(entry.skills)].sort();
+    entry.agents = [...new Set(entry.agents)].sort();
+  }
+
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     source: {
       repository: source.repository,
       requestedRef: source.ref,
@@ -29,6 +45,7 @@ function buildProvenance(plan, agentPlan, source, commit) {
     installedSkills: [...new Set(plan.map((item) => item.skill))].sort(),
     installedAgents: [...new Set(agentPlan.map((item) => item.agent))].sort(),
     installedAt: new Date().toISOString(),
+    files,
   };
 }
 
@@ -38,7 +55,60 @@ function writeProvenance(plan, agentPlan, source, commit) {
 
   for (const root of roots) {
     fs.mkdirSync(root, { recursive: true });
-    fs.writeFileSync(path.join(root, '.onu-agentic-workshop.lock.json'), `${JSON.stringify(payload, null, 2)}\n`);
+    fs.writeFileSync(path.join(root, LOCK_FILENAME), `${JSON.stringify(payload, null, 2)}\n`);
+  }
+}
+
+function readLock(root) {
+  const lockPath = path.join(root, LOCK_FILENAME);
+  if (!fs.existsSync(lockPath)) return null;
+  try {
+    return JSON.parse(fs.readFileSync(lockPath, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+function removeStale(plan, agentPlan, dryRun) {
+  const current = new Map();
+  for (const item of plan) {
+    if (!current.has(item.root)) current.set(item.root, { skills: new Set(), agents: new Set() });
+    current.get(item.root).skills.add(item.skill);
+  }
+  for (const item of agentPlan) {
+    if (!current.has(item.root)) current.set(item.root, { skills: new Set(), agents: new Set() });
+    current.get(item.root).agents.add(item.filename);
+  }
+
+  for (const [root, sets] of current) {
+    const lock = readLock(root);
+    if (!lock) continue;
+    const prevSkills = lock.files?.[root]?.skills ?? lock.installedSkills ?? [];
+    const prevAgentFiles = lock.files?.[root]?.agents ?? [];
+
+    for (const skill of prevSkills) {
+      if (sets.skills.has(skill)) continue;
+      const destination = path.join(root, skill);
+      if (!fs.existsSync(destination)) continue;
+      if (dryRun) {
+        console.log(`[dry-run] remove stale skill ${skill} -> ${destination}`);
+        continue;
+      }
+      fs.rmSync(destination, { recursive: true, force: true });
+      console.log(`Removed stale skill ${skill} -> ${destination}`);
+    }
+
+    for (const file of prevAgentFiles) {
+      if (sets.agents.has(file)) continue;
+      const destination = path.join(root, file);
+      if (!fs.existsSync(destination)) continue;
+      if (dryRun) {
+        console.log(`[dry-run] remove stale agent ${file} -> ${destination}`);
+        continue;
+      }
+      fs.rmSync(destination, { force: true });
+      console.log(`Removed stale agent ${file} -> ${destination}`);
+    }
   }
 }
 
@@ -68,6 +138,7 @@ function installAgents(agentPlan, dryRun) {
 }
 
 export function install(plan, agentPlan, { dryRun, source, commit }) {
+  removeStale(plan, agentPlan, dryRun);
   installSkills(plan, dryRun);
   installAgents(agentPlan, dryRun);
   if (!dryRun) writeProvenance(plan, agentPlan, source, commit);
