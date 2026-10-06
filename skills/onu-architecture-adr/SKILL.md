@@ -43,7 +43,7 @@ Use this skill to create durable ADRs that another engineer or agent can underst
 ## Target project focus
 
 - host versus module composition rules
-- Web, AM, SL, PL, and DM ownership boundaries
+- API/presentation, contracts, service, persistence, and domain ownership boundaries
 - frontend and backend contract coordination
 - migration, seeding, and testing implications
 

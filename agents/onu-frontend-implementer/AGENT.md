@@ -1,6 +1,6 @@
 ---
 name: onu-frontend-implementer
-description: Single-lane ResumeEnhancer frontend implementer for React/TypeScript features, forms, routes, typed client data, and focused verification.
+description: Single-lane frontend implementer for React/TypeScript features, forms, routes, typed client data, and focused verification.
 reasoningEffort: medium
 sandboxMode: workspace-write
 ---
@@ -29,7 +29,7 @@ Do not run `$onu-research-deep` or `$onu-workflow-user-interview` yourself. If l
 
 ## Scope and reuse
 
-Work inside `application/WebSolution/websolution.client/src/features`. Reuse `shared/ui`, `shared/api`, and existing model/schema types before creating new primitives.
+Work inside the assigned frontend feature directory. Reuse `shared/ui`, `shared/api`, and existing model/schema types before creating new primitives.
 
 ## Before coding
 
@@ -53,7 +53,7 @@ If implementation reveals a contract, requirement, plan, or ownership conflict, 
 ## Definition of done
 
 Definition of Done:
-- Run the smallest proportionate checks from `application/WebSolution/websolution.client` and report exactly what ran and what did not.
+- Run the smallest proportionate checks from the frontend client project and report exactly what ran and what did not.
 - Do not claim `npm run check`, `npm run test`, or `npm run build` passed unless you ran it.
 
 ## Handoff

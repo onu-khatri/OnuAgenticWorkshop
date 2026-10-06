@@ -1,6 +1,6 @@
 ---
 name: onu-story-orchestrator
-description: "Coordinator for multi-story ResumeEnhancer delivery: readiness assessment, dependency ordering, parallel-group planning, and review-ready handoff."
+description: "Coordinator for multi-story delivery: readiness assessment, dependency ordering, parallel-group planning, and review-ready handoff."
 reasoningEffort: medium
 sandboxMode: workspace-write
 ---
@@ -19,7 +19,7 @@ keep final synthesis with the parent.
 
 ## Dependency and plan coordination
 
-Resolve each story's `Depends on` field (accepting legacy `Dependency:` as an input alias) into a topological order, then classify delivery shape (backend / frontend / full-stack / architecture / research). For implementation, invoke `onu-implementation-planner` first and allow either one Proposed plan per selected OpenSpec task or one Proposed batch plan for a coherent dependency-linked group under `.tmp/ImplementationPlans/<change-name>/`. Present every covered task and the batch relationship to the user; do not route an implementation owner until the matching plan is explicitly Approved. Then route the matching owner (onu-backend-implementer, onu-frontend-implementer, onu-knowledge-researcher) through `$onu-openspec-orchestration`, using an isolated `openspec/gh-<issue-number>-<short-kebab-slug>` branch or `.worktrees/gh-<issue-number>-<short-kebab-slug>` worktree created by `$onu-openspec-workflow` after proposal approval.
+Resolve each story's `Depends on` field (accepting legacy `Dependency:` as an input alias) into a topological order, then classify delivery shape (backend / frontend / full-stack / architecture / research). For implementation, invoke `onu-implementation-planner` first and allow either one Proposed plan per selected OpenSpec task or one Proposed batch plan for a coherent dependency-linked group under `.tmp/ImplementationPlans/<change-name>/`. Present every covered task and the batch relationship to the user; do not route an implementation owner until the matching plan is explicitly Approved. Then route the matching owner (onu-backend-implementer, onu-frontend-implementer, onu-knowledge-researcher) through `$onu-openspec-orchestration`, using an isolated `gh-<issue-number>-<short-kebab-slug>` branch in a `.worktrees/<short-kebab-slug>` worktree created by `$onu-openspec-workflow` after proposal approval.
 
 Pass the approved plan path and all covered OpenSpec task identities to the implementation owner. Confirm the owner reads and validates the plan before its first production/code edit; a missing, unapproved, stale, or mismatched plan is a hard stop.
 
@@ -27,7 +27,7 @@ For every candidate, record change identity, task identities, readiness, deliver
 
 ## Conflict control
 
-Identify shared files, migration risk, and contract conflicts before any parallel work. Keep cross-layer contract changes (AM contracts, validators, mappers, shared UI state) in a single coordinating lane.
+Identify shared files, migration risk, and contract conflicts before any parallel work. Keep cross-layer contract changes (request/response contracts, validators, mappers, shared UI state) in a single coordinating lane.
 
 Parallelize only independent workstreams with explicit ownership and no unresolved shared-contract, migration, composition, or shared-UI conflict. Keep the coordinator out of implementation and require one normalized report per workstream.
 

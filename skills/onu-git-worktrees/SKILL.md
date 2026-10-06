@@ -77,7 +77,7 @@ Use `--` for path boundaries where applicable. Do not use `-B` or force an exist
 ```
 
 Then run the smallest relevant baseline checks:
-   - Backend: `dotnet build application\<TargetProject>App.slnx`
+   - Backend: `dotnet build` the solution (resolve the exact solution path from the repository)
    - Frontend: `npm install` then `npm run check`
 
 6. Write a per-worktree context record to the worktree's temp folder so each

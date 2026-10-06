@@ -73,7 +73,7 @@ Select the smallest applicable set:
 | Frontend feature or UI | `$onu-frontend-development` plus `$onu-frontend-guidelines`; use React, design, security, performance, or review skills only when triggered |
 | Full-stack/story delivery | `$onu-delivery-full-stack-feature` and the applicable delivery workflow |
 | Development code, tests, configuration, or migrations | `$onu-workflow-development-entry` first; it routes specialists but does not invoke implementers |
-| Single development request end-to-end | `onu-autonomous-developer` (driver) runs entry → implement → review → deliver |
+| Single development request end-to-end | `onu-autonomous-developer` (driver) runs entry → plan → implement → review (replan loop) → work-done approval → deliver |
 | Plan created by `$onu-workflow-planning` | `$onu-plan-review-approval` |
 | Production review/security/quality | `$onu-quality-code-review` (methodology) with `onu-code-reviewer` and `onu-security-auditor` as delegated review lanes; `$onu-security-management` for security design |
 | Research or durable knowledge | `$onu-research-deep`, `$onu-knowledge-project-builder`, or documentation/product skill as triggered |
@@ -83,30 +83,60 @@ Specialist skills return constraints, findings, evidence, or handoff; they do
 not recursively invoke unrelated specialists or duplicate implementation
 ownership. `$onu-frontend-guidelines` is a non-delegating standards authority.
 
-The installed `onu-*` agents are defaults. To prefer your own implementation or
-planning agents, name them in this file under the relevant route; your explicit
-routing here takes priority over the installed agent catalog.
+The installed `onu-*` agents are defaults, not fixed bindings. To override a
+role with your own agent, name it in this file under the relevant route; your
+explicit routing here takes priority over the installed agent catalog. The
+overridable roles in the autonomous loop are:
+
+| Role | Default agent |
+|---|---|
+| Driver | `onu-autonomous-developer` |
+| Planner | `onu-implementation-planner` |
+| Implementor (backend) | `onu-backend-implementer` |
+| Implementor (frontend) | `onu-frontend-implementer` |
+| Code review | `onu-code-reviewer` |
+| Security review | `onu-security-auditor` |
 
 ## Autonomous code and review loop
 
 For one development request, the driver (a user-defined primary agent or
 `onu-autonomous-developer`) runs this loop:
 
+```text
+work (request)
+  → entry ($onu-workflow-development-entry)
+  → plan ($onu-implementation-planner)
+  → implement (onu-backend-implementer | onu-frontend-implementer)
+  → review (onu-code-reviewer + onu-security-auditor)
+       └─ blocking findings → replan → implement → review (repeat until clean)
+  → work-done
+  → ask user approval
+  → deliver ($onu-git-commit → $onu-delivery-pull-request)
+```
+
 1. **Entry** — `$onu-workflow-development-entry` reconstructs state, classifies
    the delivery shape, and returns PASS/BLOCKED plus the implementation route.
    A plain-language request needs no user story, GitHub issue, or OpenSpec change.
-2. **Implement** — follow the routed implementation skills
-   (`$onu-backend-feature-development` or `$onu-frontend-development`), or
-   delegate a bounded lane to `onu-backend-implementer` / `onu-frontend-implementer`.
-3. **Review** — delegate `onu-code-reviewer` and `onu-security-auditor` as
-   read-only lanes, using `$onu-quality-code-review` as the methodology; apply
-   blocking findings before delivery.
-4. **Deliver** — `$onu-git-commit`, then `$onu-delivery-pull-request`.
+2. **Plan** — delegate to `onu-implementation-planner` to produce an approved,
+   reviewable implementation plan (single task or coherent batch) before any
+   production edit. Never implement against an unapproved or missing plan.
+3. **Implement** — route the matching owner (`onu-backend-implementer` /
+   `onu-frontend-implementer`) to implement exactly the approved plan, following
+   the routed implementation skills.
+4. **Review** — delegate `onu-code-reviewer` and `onu-security-auditor` as
+   read-only lanes, using `$onu-quality-code-review` as the methodology.
+5. **Replan loop** — when review returns blocking or important findings, route
+   back to `onu-implementation-planner` to revise the plan, then re-implement and
+   re-review. Repeat until the review is clean (no blocking findings).
+6. **Work-done** — once the review is clean, stop and ask the user for approval
+   before delivery.
+7. **Deliver** — only after user approval, `$onu-git-commit`, then
+   `$onu-delivery-pull-request`.
 
 Interrupt the user only on a real gate (BLOCKED, a material unresolved
-decision, or a destructive/irreversible action). Continue automatically inside
-approved scope, and run independent lanes in parallel under the delegation
-protocol.
+decision, a destructive/irreversible action, or the work-done approval gate).
+Continue automatically inside approved scope, and run independent lanes in
+parallel under the delegation protocol.
 
 ## Delegation and parallel work
 

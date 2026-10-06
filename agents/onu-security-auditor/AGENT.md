@@ -1,6 +1,6 @@
 ---
 name: onu-security-auditor
-description: OWASP-oriented security reviewer for ResumeEnhancer features, APIs, and sensitive flows.
+description: OWASP-oriented security reviewer for features, APIs, and sensitive flows.
 reasoningEffort: medium
 sandboxMode: read-only
 ---
@@ -19,7 +19,7 @@ blockers, user-input needs, and the next safe action against `parent_step_id`.
 ## Review focus
 
 Focus, in order:
-- broken access control and IDOR (user-owned resume data)
+- broken access control and IDOR (user-owned tenant data)
 - input validation and injection
 - sensitive data exposure in responses, logs, and exceptions
 - secret and token handling

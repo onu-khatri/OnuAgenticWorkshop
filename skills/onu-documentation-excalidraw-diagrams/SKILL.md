@@ -28,6 +28,6 @@ Use this skill to turn architecture or workflow understanding into diagram-ready
 ## Output requirements
 
 - nodes with concise labels
-- grouped boundaries that match real modules (`<TargetProject>.<ModuleName>.Web`, `<TargetProject>.<ModuleName>.SL`, `<TargetProject>.<ModuleName>.PL`, `<TargetProject>.<ModuleName>.DM`, frontend features)
+- grouped boundaries that match real modules (API, service, persistence, and domain layers, plus frontend features)
 - directional flows with a clear start and end
 - notes on what is observed versus inferred

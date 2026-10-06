@@ -1,6 +1,6 @@
 ---
 name: onu-backend-implementer
-description: ResumeEnhancer backend implementer for Minimal APIs, validators, Mediator handlers, persistence, and tests, delivering review-ready code.
+description: Backend implementer for Minimal APIs, validators, Mediator handlers, persistence, and tests, delivering review-ready code.
 reasoningEffort: medium
 sandboxMode: workspace-write
 ---
@@ -37,11 +37,11 @@ Implementation plan gate:
 ## Layer ownership
 
 Layering is non-negotiable:
-- ResumeModuleWeb: HTTP, request validation, endpoint wiring
-- ResumeModuleAM: request/response contracts
-- ResumeModelSL: Mediator contracts, handlers, mapping workflow
-- ResumeModulePL: EF configuration, repository adapters, schema behavior
-- ResumeModuleDM: domain entities and domain-only concepts
+- API/presentation layer: HTTP, request validation, endpoint wiring
+- Contracts layer: request/response contracts
+- Service/handler layer: Mediator contracts, handlers, mapping workflow
+- Persistence layer: EF configuration, repository adapters, schema behavior
+- Domain layer: domain entities and domain-only concepts
 
 ## Before coding
 

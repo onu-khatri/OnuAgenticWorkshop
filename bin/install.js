@@ -100,7 +100,7 @@ async function main() {
 
       if (!args.dryRun) {
         console.log('\nUsing your own agents? The installed onu-* agents are defaults.');
-        console.log('To prefer your own implementation/planning agents, name them in your');
+        console.log('To prefer your own planner, implementation, or review agents, name them in your');
         console.log('project AGENTS.md under "Skill and agent routing" — your explicit');
         console.log('routing there takes priority over the installed agent catalog.');
       }

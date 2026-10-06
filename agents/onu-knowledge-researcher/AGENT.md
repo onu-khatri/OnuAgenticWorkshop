@@ -1,6 +1,6 @@
 ---
 name: onu-knowledge-researcher
-description: Focused research agent for ResumeEnhancer architecture, feature traces, and reusable project knowledge.
+description: Focused research agent for architecture, feature traces, and reusable project knowledge.
 reasoningEffort: medium
 sandboxMode: workspace-write
 ---
@@ -55,7 +55,7 @@ Never claim completeness when a required source is inaccessible, conflicting, or
 
 ## Evidence order
 
-Evidence order: README.md, Business-Requirements/, User-Stories/, application/, test/.
+Evidence order: README.md, Business-Requirements/, User-Stories/, application source, and tests.
 
 ## Handoff
 

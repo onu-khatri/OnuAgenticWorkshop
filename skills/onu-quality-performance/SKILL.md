@@ -39,12 +39,12 @@ For a frontend workstream, follow [frontend workflow routing](../onu-frontend-gu
 
 ## API boundary
 
-- Return only the fields the UI needs; keep AM response contracts lean.
+- Return only the fields the UI needs; keep API response contracts lean.
 - Use cancellation tokens end to end so abandoned requests do not keep querying.
 
 ## Verification
 
-- Backend: run integration tests and observe query behavior: `dotnet test test\IntegrationTest\<TargetProject>.Tests.Integration.csproj --no-restore`.
+- Backend: run integration tests and observe query behavior (resolve the exact test project path from the repository).
 - Frontend: `npm run build` and profile with the browser devtools performance panel.
 
 ## Definition of Done

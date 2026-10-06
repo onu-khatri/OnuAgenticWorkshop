@@ -51,6 +51,6 @@ Use this skill to make the codebase cheaper to change without disguising a redes
 ## Definition of Done
 
 - Behavior is preserved and proven by the existing test suite.
-- Backend: `dotnet build application\<TargetProject>App.slnx` and `dotnet test test\<TargetProject>.Tests\<TargetProject>.Tests.Unit.csproj --no-restore` pass.
+- Backend: `dotnet build` the solution and `dotnet test` the unit-test project pass (resolve exact paths from the repository).
 - Frontend: `npm run check` and `npm run build` pass in the client.
 - The diff stays small and reviewable; unrelated debt is recorded separately.

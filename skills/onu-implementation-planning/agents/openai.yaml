@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implementation Planning"
+  short_description: "Plan a code change before implementation"
+  default_prompt: "Use $onu-implementation-planning to plan this code change before any implementation."

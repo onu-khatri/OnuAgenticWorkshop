@@ -73,6 +73,7 @@ Environment overrides are also supported:
 ```text
 AGENT_SKILLS_REPOSITORY
 AGENT_SKILLS_REF
+AGENT_SKILLS_LOCAL_SOURCE
 AGENT_SKILLS_PATH
 AGENT_SKILLS_AGENTS_PATH
 ```
@@ -167,6 +168,47 @@ Behavior is controlled by `registerAgentsInInstructions` (default `true`) and th
 
 The injected section is wrapped in `<!-- BEGIN onu-agentic-workshop:agents -->` / `<!-- END onu-agentic-workshop:agents -->` markers and is clearly labelled as auto-generated. On reinstall, the installer replaces only that marked section, preserving any other content the user has written in the file. When Codex, Copilot, and OpenCode all target the same `AGENTS.md`, it is written once. The repository's `agents/AGENTS.md` is a separate, user-owned instruction file and is never auto-appended or overridden.
 
+## Overriding agents in the autonomous flow
+
+The installed `onu-*` agents are defaults, not fixed bindings. In your project's `AGENTS.md` you can name your own agent for any role in the autonomous development loop; your explicit routing takes priority over the installed agent catalog.
+
+The overridable roles and their defaults:
+
+| Role | Default agent |
+| --- | --- |
+| Driver | `onu-autonomous-developer` |
+| Planner | `onu-implementation-planner` |
+| Implementor (backend) | `onu-backend-implementer` |
+| Implementor (frontend) | `onu-frontend-implementer` |
+| Code review | `onu-code-reviewer` |
+| Security review | `onu-security-auditor` |
+
+For example, to use your own planner and code reviewer while keeping the default implementors, add this to your project `AGENTS.md` under its "Skill and agent routing" section:
+
+```markdown
+## Skill and agent routing
+
+When a development request needs an implementation plan, delegate to
+`acme-planner` instead of the default `onu-implementation-planner`.
+
+When reviewing a change, delegate to `acme-reviewer` instead of the default
+`onu-code-reviewer`.
+```
+
+Your project `AGENTS.md` takes priority over the injected agent catalog, which is additive and never overrides your own content. Override only the roles you care about; any role you do not name falls back to the installed `onu-*` default.
+
+## Autonomous development workflow
+
+Beyond installation, this repository ships a ready-made autonomous development workflow: skills (the *how*), agents (the *who*), and a project instruction file (`agents/AGENTS.md`) that routes between them. A driver agent runs one development request end-to-end:
+
+```text
+entry → plan → implement → review (replan loop) → work-done → user approval → deliver
+```
+
+The default agents are `onu-autonomous-developer` (driver), `onu-implementation-planner` (plan), `onu-backend-implementer` / `onu-frontend-implementer` (implement), and `onu-code-reviewer` + `onu-security-auditor` (review). Every role is overridable from your project `AGENTS.md` (see the previous section).
+
+See [`docs/autonomous-workflow.md`](docs/autonomous-workflow.md) for the full loop, how to define your own driver agent, and the delegation protocol.
+
 ## Source provenance
 
 After a successful install, the CLI writes:
@@ -175,7 +217,7 @@ After a successful install, the CLI writes:
 .onu-agentic-workshop.lock.json
 ```
 
-inside each target skill root. It records:
+inside each target root (each skill root and each agent root). It records:
 
 - source repository
 - requested Git ref
@@ -184,8 +226,11 @@ inside each target skill root. It records:
 - installed skill names
 - installed agent names
 - install timestamp
+- a per-root `files` map of the skill folders and agent filenames written to that root
 
 This makes a moving ref such as `main` auditable and a pinned tag/SHA reproducible.
+
+On reinstall, the CLI uses this lock file to remove stale entries: a skill or agent present in the previous install but no longer in the source repository is deleted from its target root. This keeps the installed set in sync with the source when skills or agents are removed upstream.
 
 ## Non-interactive use
 
@@ -304,6 +349,8 @@ The `model` field is intentionally not set in the repository's agents. Models ar
 See [`agent-formats.json`](agent-formats.json) for the canonical frontmatter schema and the per-vendor field mapping, and [`docs/agent-formats.md`](docs/agent-formats.md) for a full explanation of the agent format, vendor serialization, and how to add a vendor or field.
 
 See [`docs/shared-skill-practices.md`](docs/shared-skill-practices.md) for the cross-client conventions and security/versioning practices used by this repository.
+
+See [`docs/autonomous-workflow.md`](docs/autonomous-workflow.md) for the autonomous development loop and how to define your own driver agent.
 
 ## npm packaging
 

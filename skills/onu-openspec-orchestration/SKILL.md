@@ -121,13 +121,16 @@ Never claim an action was performed unless the tool result confirms it.
 When a GitHub issue is the origin of a new change, prefer:
 
 - OpenSpec change: `gh-<issue-number>-<short-kebab-slug>`
-- branch: `openspec/gh-<issue-number>-<short-kebab-slug>`
+- branch: `gh-<issue-number>-<short-kebab-slug>`
 
 If an existing change, branch, or PR already clearly corresponds to the work,
 reuse it. Never create a second change merely to normalize its name.
 
 For work without an issue, use a concise kebab-case change name and branch
 `openspec/<change-name>`.
+
+Propose the branch name as a default and ask the user to confirm or override
+it; the user's selection takes priority.
 
 ## State discovery
 

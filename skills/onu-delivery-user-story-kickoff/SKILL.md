@@ -23,8 +23,8 @@ The `.US.md` frontmatter carries the delivery state and must be kept current:
 id: RES-BE-001
 title: <story title>
 status:            # Ready_To_Implement | Move_To_GitHub_Issue | In_Progress | Blocked | PR_Open | Done
-branch:            # openspec/gh-<issue-number>-<short-kebab-slug>
-worktree_path:     # .worktrees/gh-<issue-number>-<short-kebab-slug>
+branch:            # user-confirmed; default gh-<issue-number>-<short-kebab-slug>
+worktree_path:     # .worktrees/<short-kebab-slug>
 base_branch: main  # normalize from `master` to the repo's actual default
 pr_url:
 is_architectural:  # true when the story changes module boundaries/contracts
@@ -66,7 +66,7 @@ Build a dependency graph from each story's `Depends on` field (legacy `Dependenc
 ### 4. Analyze conflict risk
 
 Identify shared files and cross-cutting surfaces before parallelizing:
-- AM request/response contracts and validators
+- request/response contracts and validators
 - EF migrations and seed data
 - shared UI primitives, router, and app shell
 - the module composition project and module registration

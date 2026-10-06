@@ -28,10 +28,10 @@ Use this skill to produce documentation that reflects the real codebase, not gen
 
 ## Target project content map
 
-- Module responsibilities: `<TargetProject>.<ModuleName>.Web` (HTTP/validation), `<TargetProject>.<ModuleName>.AM` (contracts), `<TargetProject>.<ModuleName>.SL` (handlers/mapping), `<TargetProject>.<ModuleName>.PL` (EF/repositories), `<TargetProject>.<ModuleName>.DM` (entities).
+- Module responsibilities by layer: API (HTTP/validation), contracts, service (handlers/mapping), persistence (EF/repositories), and domain (entities).
 - API surface: Minimal API groups under `/api/...` and their command/query endpoints.
-- <TargetProject>.Infrastructure.Persistence: the shared DbContext, unit of work, repository base, seeding, migrations.
-- Verification commands: `dotnet build application\<TargetProject>App.slnx`, `dotnet test ...`, `npm run check`.
+- The persistence project: the shared DbContext, unit of work, repository base, seeding, migrations (resolve the exact project name from the repository).
+- Verification commands: `dotnet build` the solution, `dotnet test` the test project, `npm run check` (resolve exact paths from the repository).
 
 ## Quality bar
 

@@ -152,7 +152,7 @@ Select one primary implementation owner per issue and pass that ownership to `$o
 
 Check for shared:
 
-- AM contracts, validators, mapping, or API response shapes;
+- request/response contracts, validators, mapping, or API response shapes;
 - EF migrations, schema, seed data, or persistence adapters;
 - the module composition project and module registration;
 - shared UI primitives, router, app shell, or theme tokens; and

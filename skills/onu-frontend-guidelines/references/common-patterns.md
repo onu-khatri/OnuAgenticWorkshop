@@ -263,7 +263,7 @@ const handleSave = () => {
 Use TanStack Query for **all server data**:
 - Fetching: useSuspenseQuery
 - Mutations: useMutation
-- <TargetProject>.Infrastructure.Caching: Automatic
+- Caching: Automatic
 - Synchronization: Built-in
 
 ```typescript

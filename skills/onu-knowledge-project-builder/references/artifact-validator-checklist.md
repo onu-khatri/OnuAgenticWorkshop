@@ -32,7 +32,7 @@ Granular YES/NO companion to `knowledge-quality-gates.md`. A NO is a defect to f
 
 ## Verification & commands
 
-- [ ] Runnable commands with correct paths (`dotnet build application\<TargetProject>App.slnx`, `npm run check`); states what was verified this session vs. guidance only.
+- [ ] Runnable commands with correct paths (`dotnet build` the solution, `npm run check`); states what was verified this session vs. guidance only.
 
 ## Boundaries & anti-patterns
 

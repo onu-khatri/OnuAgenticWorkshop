@@ -37,7 +37,7 @@ Use this skill to finish implementation work safely and raise it for review with
 ## Target project rules
 
 - Mention module boundaries explicitly when they matter.
-- Call out changes to `<TargetProject>.<ModuleName>.Web`, `<TargetProject>.<ModuleName>.SL`, `<TargetProject>.<ModuleName>.PL`, and the affected frontend feature separately when touched.
+- Call out changes to the API, service, and persistence layers, and the affected frontend feature separately when touched.
 - Mention schema or migration impact whenever persistence changes.
 - Mention validation, mapping, and test coverage when relevant.
 - Preserve the story's `## GitHub Issues` register and reference the corresponding issue in the PR body, title when useful, and commit footer.
@@ -46,7 +46,7 @@ Use this skill to finish implementation work safely and raise it for review with
 ## Verification
 
 - State which verification commands were run, not just that code changed.
-- Backend: `dotnet build application\<TargetProject>App.slnx` and the relevant `dotnet test` project from `test/`.
+- Backend: `dotnet build` the solution and run the relevant `dotnet test` project (resolve exact paths from the repository).
 - Frontend: `npm run check` and `npm run build` in the client.
 - Separate verified behavior from untested or risky areas in the PR description.
 - Local commit and push verification do not prove that a hosted PR exists; require the hosted MCP response and a follow-up read before recording `PR_Open`.

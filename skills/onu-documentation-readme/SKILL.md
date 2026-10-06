@@ -37,7 +37,7 @@ Use this skill to produce high-quality README files grounded in the actual codeb
 - Backend: .NET — `dotnet build` the solution, `dotnet test` the unit-test project, and `dotnet run` the host project (resolve exact project paths from the repository).
 - Frontend: `npm run check`, `npm run build`, `npm run dev`.
 - Migrations: run the migration project's `--help` command (resolve the exact project path from the repository).
-- Use `<TargetProject>.<ModuleName>.Web` / `<TargetProject>.<ModuleName>.AM` / `<TargetProject>.<ModuleName>.SL` / `<TargetProject>.<ModuleName>.PL` / `<TargetProject>.<ModuleName>.DM` placeholders when describing module layering.
+- Describe module layering by role (API, contracts, service, persistence, domain) using the repository's own module names.
 
 ## Quality bar
 
